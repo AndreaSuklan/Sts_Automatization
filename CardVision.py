@@ -151,5 +151,5 @@ trainer = Trainer(
 if __name__ == "__main__":
     print("Starting DETR training...")
     trainer.train()
-    trainer.save_model("sts_detr_model_final")
+    trainer.save_model(OUTPUT_DIR / "output" / "sts_detr_model_final")
     print("Training complete and model saved.")

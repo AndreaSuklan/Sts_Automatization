@@ -75,20 +75,24 @@ def generate_dataset():
         base_w = int(sample_card.width * CARD_SCALE_FACTOR)
         base_h = int(sample_card.height * CARD_SCALE_FACTOR)
         
-        overlap_factor = random.uniform(0.99, 1.0) 
+        overlap_factor = random.uniform(0.85, 1.0) 
         step_x = base_w * overlap_factor
         total_hand_width = base_w + (step_x * (num_cards - 1))
         
         # If the hand is wider than 95% of the screen, force it to squeeze tighter
         max_allowed_width = canvas_w * 0.95
-        if total_hand_width > max_allowed_width:
-            step_x = (max_allowed_width - base_w) / max(1, (num_cards - 1))
+        new_scale = CARD_SCALE_FACTOR
+        while total_hand_width > max_allowed_width:
+            new_scale -= 0.05
+            base_w = int(sample_card.width * new_scale)
+            base_h = int(sample_card.height * new_scale)
+            step_x = step_x = base_w * overlap_factor
             total_hand_width = base_w + (step_x * (num_cards - 1))
             
         start_center_x = (canvas_w / 2) - (total_hand_width / 2) + (base_w / 2)
         
-        # Calculate maximum possible height after a 20-degree rotation
-        rad_20 = math.radians(20)
+        # Calculate maximum possible height after a 15-degree rotation
+        rad_20 = math.radians(15)
         max_rot_h = (base_w * math.sin(rad_20)) + (base_h * math.cos(rad_20))
         max_drop_y = (((num_cards - 1) / 2) ** 2) * (base_h * 0.03)
         
