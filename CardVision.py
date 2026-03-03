@@ -14,8 +14,8 @@ IMG_DIR = OUTPUT_DIR / "images"
 ANNOTATION_FILE = OUTPUT_DIR / "dataset.coco.json"
 
 MODEL_NAME = "facebook/detr-resnet-50"
-BATCH_SIZE = 1
-EPOCHS = 0.1 # Start small, increase if needed
+BATCH_SIZE = 2
+EPOCHS = 10 # Start small, increase if needed
 
 # 1. Load the COCO Data
 with open(ANNOTATION_FILE, 'r') as f:
