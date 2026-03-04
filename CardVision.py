@@ -11,7 +11,7 @@ import numpy as np
 MAIN_DIR = Path.cwd()
 OUTPUT_DIR = MAIN_DIR / "output"
 IMG_DIR = OUTPUT_DIR / "images"
-ANNOTATION_FILE = OUTPUT_DIR / "dataset.coco.json"
+ANNOTATION_FILE = OUTPUT_DIR / "dataset.coco.json" 
 
 MODEL_NAME = "facebook/detr-resnet-50"
 BATCH_SIZE = 2

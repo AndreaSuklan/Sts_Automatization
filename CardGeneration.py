@@ -31,7 +31,7 @@ class_map = {name: idx for idx, (name, path) in enumerate(card_data)}
 print(f"Successfully loaded {len(card_data)} cards.")
 
 # Generation settings
-NUM_IMAGES_TO_GENERATE = 10000
+NUM_IMAGES_TO_GENERATE = 1000
 MIN_CARDS = 1
 MAX_CARDS = 10
 CARD_SCALE_FACTOR = 0.3 
@@ -91,8 +91,8 @@ def generate_dataset():
             
         start_center_x = (canvas_w / 2) - (total_hand_width / 2) + (base_w / 2)
         
-        # Calculate maximum possible height after a 15-degree rotation
-        rad_20 = math.radians(15)
+        # Calculate maximum possible height after a 20-degree rotation
+        rad_20 = math.radians(20)
         max_rot_h = (base_w * math.sin(rad_20)) + (base_h * math.cos(rad_20))
         max_drop_y = (((num_cards - 1) / 2) ** 2) * (base_h * 0.03)
         
@@ -107,7 +107,7 @@ def generate_dataset():
             if num_cards == 1:
                 angle = 0
             else:
-                angle = -15 * ((j - num_cards/2)/num_cards)
+                angle = -20 * ((j - num_cards/2)/num_cards)
                 
             rotated_card = card_img.rotate(angle, expand=True, resample=Image.Resampling.BICUBIC)
             rot_w, rot_h = rotated_card.size
@@ -142,6 +142,8 @@ def generate_dataset():
         
         # 4. Save Image
         canvas.convert("RGB").save(IMG_OUT / image_filename)
+        if i%100 == 0:
+            print(f"Created {i*100/NUM_IMAGES_TO_GENERATE}% images")
             
     # 5. Save the master COCO JSON file
     json_output_path = OUTPUT_DIR / "dataset.coco.json"
