@@ -35,7 +35,7 @@ class_map = {name: idx for idx, (name, path) in enumerate(card_data)}
 print(f"Successfully loaded {len(card_data)} cards.")
 
 # Generation settings
-NUM_IMAGES_TO_GENERATE = 10
+NUM_IMAGES_TO_GENERATE = 1000
 MIN_CARDS = 1
 MAX_CARDS = 10
 CARD_SCALE_FACTOR = 0.3 

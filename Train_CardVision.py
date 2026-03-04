@@ -14,10 +14,12 @@ def train_segmentation_model():
     # Start the training loop
     results = model.train(
         data=str(YAML_PATH),
-        epochs=10,        # Start with a low number just to verify the pipeline works
-        imgsz=640,        # Standard input resolution for YOLO
-        batch=4,          # Low batch size to prevent memory crashes on your CPU/GPU
-        device="cpu"      # Change this to "0" if you have an NVIDIA GPU configured for PyTorch
+        epochs=100,        # Start with a low number just to verify the pipeline works
+        rect=True,
+	imgsz=608,        # Standard input resolution for YOLO
+        batch=16,          # Low batch size to prevent memory crashes on your CPU/GPU
+        workers=4,
+	device="0"      # Change this to "0" if you have an NVIDIA GPU configured for PyTorch
     )
     
     print("Training complete!")
