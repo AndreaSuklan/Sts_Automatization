@@ -1,5 +1,5 @@
 import random
-import json
+import os
 import math
 from PIL import Image, ImageDraw
 from pathlib import Path
@@ -12,11 +12,13 @@ BG_DIR = MAIN_DIR / "events"
 CARD_DIR = MAIN_DIR / "1024Portraits"
 OUTPUT_DIR = MAIN_DIR / "output"
 IMG_OUT = OUTPUT_DIR / "images"
+LABEL_OUT = OUTPUT_DIR / "labels"
 
 DEBUG_BBOX = False 
 
 # Create output dirs if they don't exist
 IMG_OUT.mkdir(parents=True, exist_ok=True)
+LABEL_OUT.mkdir(parents=True, exist_ok=True) 
 
 # Crawl data and store both the name and the full path
 card_data = [] 
@@ -44,15 +46,6 @@ def generate_dataset():
     if not bg_files:
         print("Error: No backgrounds found!")
         return
-
-    coco_data = {
-        "info": {"description": "Slay the Spire Synthetic Hands - Native COCO"},
-        "images": [],
-        "annotations": [],
-        "categories": [{"id": idx, "name": name, "supercategory": "card"} for name, idx in class_map.items()]
-    }
-    
-    annotation_id = 0
         
     for i in range(NUM_IMAGES_TO_GENERATE):
         bg_path = random.choice(bg_files)
@@ -66,14 +59,13 @@ def generate_dataset():
         num_cards = random.randint(MIN_CARDS, MAX_CARDS)
         hand = random.choices(card_data, k=num_cards)
         
-        # Register the cropped image dimensions in COCO
         image_filename = f"synthetic_hand_{i}.jpg"
-        coco_data["images"].append({
-            "id": i,
-            "file_name": image_filename,
-            "width": canvas_w,
-            "height": crop_h # CHANGED: Uses cropped height
-        })
+        label_filename = f"synthetic_hand_{i}.txt" 
+        label_filepath = LABEL_OUT / label_filename
+        
+        # Clear out the label file if it already exists from a previous run
+        if label_filepath.exists():
+            label_filepath.unlink()
         
         # 1. Dynamic Spacing & Overlap Logic
         sample_card = Image.open(hand[0][1])
@@ -127,69 +119,65 @@ def generate_dataset():
             canvas.alpha_composite(rotated_card, (paste_x, paste_y))
             
             # Polygon Math for tight corners
-            # Get the absolute center of the pasted rotated image
             cx = paste_x + (rot_w / 2)
             cy = paste_y + (rot_h / 2)
             
-            # Unrotated corner coordinates relative to center
             hw, hh = base_w / 2, base_h / 2
-            corners = [
-                (-hw, -hh), # Top-Left
-                (hw, -hh),  # Top-Right
-                (hw, hh),   # Bottom-Right
-                (-hw, hh)   # Bottom-Left
-            ]
+            corners = [(-hw, -hh), (hw, -hh), (hw, hh), (-hw, hh)]
             
-            # Rotate corners using standard rotation matrix
-            # (PIL uses CCW rotation, requiring a negative angle for standard screen-space math)
             rad = math.radians(-angle)
             cos_a = math.cos(rad)
             sin_a = math.sin(rad)
             
             poly_points = []
-            poly_points_flat_cropped = []
+            norm_seg_points = [] # CHANGED: List for normalized YOLO coords
             
             for x, y in corners:
+                # Absolute coordinates on the full canvas
                 rx = cx + (x * cos_a - y * sin_a)
                 ry = cy + (x * sin_a + y * cos_a)
                 poly_points.append((rx, ry))
                 
-                # Shift Y coordinates for the cropped COCO annotation
-                poly_points_flat_cropped.extend([rx, ry - crop_y_start])
+                # CHANGED: Calculate normalized coordinates for cropped image
+                shifted_y = ry - crop_y_start
+                norm_x = rx / canvas_w
+                norm_y = shifted_y / crop_h
+                
+                # Clamp coordinates between 0.0 and 1.0 to prevent YOLO crash on edge clipping
+                norm_x = max(0.0, min(1.0, norm_x))
+                norm_y = max(0.0, min(1.0, norm_y))
+                
+                # Append formatted string to the list
+                norm_seg_points.extend([f"{norm_x:.6f}", f"{norm_y:.6f}"])
 
             if DEBUG_BBOX:
                 draw = ImageDraw.Draw(canvas)
-                # Draw the tight polygon
                 draw.polygon(poly_points, outline="lime", width=3)
             
-            # 4. Shift BBox Y-coordinate for cropped COCO annotation
-            bbox_cropped = [paste_x, paste_y - crop_y_start, rot_w, rot_h]
-            area = rot_w * rot_h
-            
-            coco_data["annotations"].append({
-                "id": annotation_id,
-                "image_id": i,
-                "category_id": class_map[card_name],
-                "bbox": bbox_cropped,
-                "area": area,
-                "iscrowd": 0,
-                "segmentation": [poly_points_flat_cropped] # Added polygon data
-            })
-            annotation_id += 1
+            # 3. CHANGED: Write the instance segmentation format to .txt
+            with open(label_filepath, "a") as f:
+                f.write(f"{class_map[card_name]} {' '.join(norm_seg_points)}\n")
         
-        # 5. CHANGED: Crop canvas to bottom 30% before saving
+        # 4. Crop canvas to bottom 30% before saving
         final_image = canvas.crop((0, crop_y_start, canvas_w, canvas_h))
         final_image.convert("RGB").save(IMG_OUT / image_filename)
         
         if i % 100 == 0 and i > 0:
             print(f"Created {int(i*100/NUM_IMAGES_TO_GENERATE)}% images")
             
-    json_output_path = OUTPUT_DIR / "dataset.coco.json"
-    with open(json_output_path, "w") as f:
-        json.dump(coco_data, f, indent=4)
-        
-    print(f"Successfully generated {NUM_IMAGES_TO_GENERATE} cropped images.")
-    print(f"Saved native COCO annotations to {json_output_path}")
+    # 5. Auto-generate the data.yaml file for YOLO training
+    yaml_path = OUTPUT_DIR / "data.yaml"
+    with open(yaml_path, "w") as f:
+        f.write(f"path: {OUTPUT_DIR.resolve()}\n")
+        f.write("train: images\n")
+        f.write("val: images\n\n")
+        f.write("names:\n")
+        sorted_classes = sorted(class_map.items(), key=lambda item: item[1])
+        for name, idx in sorted_classes:
+            f.write(f"  {idx}: {name}\n")
+            
+    print(f"Successfully generated {NUM_IMAGES_TO_GENERATE} YOLO segmentation images and labels.")
+    print(f"Saved YOLO configuration to {yaml_path}")
 
 if __name__ == "__main__":
     generate_dataset()

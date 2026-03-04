@@ -10,6 +10,8 @@
 *.json
 *.pth
 *.bin
+*.yaml
+*csv
 
 
 # User-specific files
