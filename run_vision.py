@@ -6,11 +6,11 @@ from transformers import DetrImageProcessor, DetrForObjectDetection
 # --- CONFIGURATION ---
 MAIN_DIR = Path.cwd()
 # Point this to where your trainer.save_model() saved the final weights
-MODEL_PATH = MAIN_DIR / "output" / "sts_detr_model_final" 
+MODEL_PATH = MAIN_DIR / "output" / "output" / "sts_detr_model_final" 
 TEST_IMAGE_PATH = MAIN_DIR / "output" / "images" 
 PRED_DIR = MAIN_DIR / "output" / "hand_predictions"
 
-CONFIDENCE_THRESHOLD = 0.85 # Ignore guesses the model isn't at least 85% sure about
+CONFIDENCE_THRESHOLD = 0.01 # Ignore guesses the model isn't at least 85% sure about
 NUM_TEST_IMAGES = 5
 
 def run_inference(NUM_TEST_IMAGES=5):

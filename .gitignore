@@ -5,6 +5,12 @@
 
 *.jpg
 *.png
+*.safetensors
+*.pt
+*.json
+*.pth
+*.bin
+
 
 # User-specific files
 *.rsuser
