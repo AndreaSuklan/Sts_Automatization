@@ -17,8 +17,8 @@ def train_segmentation_model():
         epochs=400,
         rect=True,
 	    imgsz=608,
-        batch=16,
-        workers=4,
+        batch=-1,
+        workers=8,
 	    device="0"
     )
     
