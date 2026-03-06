@@ -24,18 +24,16 @@ LABEL_OUT.mkdir(parents=True, exist_ok=True)
 card_data = [] 
 allowed_folders = ['colorless', 'curse', 'green']
 
-for folder in allowed_folders:
-    folder_path = CARD_DIR / folder
-    if folder_path.exists():
-        for file_path in folder_path.rglob('*'):
-            if file_path.suffix.lower() in ['.png', '.jpg']:
-                card_data.append((file_path.name, file_path.as_posix()))
+for folder in CARD_DIR.iterdir():
+    for file_path in folder.rglob('*'):
+        if file_path.suffix.lower() in ['.png', '.jpg']:
+            card_data.append((file_path.name, file_path.as_posix()))
 
 class_map = {name: idx for idx, (name, path) in enumerate(card_data)}
 print(f"Successfully loaded {len(card_data)} cards.")
 
 # Generation settings
-NUM_IMAGES_TO_GENERATE = 1000
+NUM_IMAGES_TO_GENERATE = 100000
 MIN_CARDS = 1
 MAX_CARDS = 10
 CARD_SCALE_FACTOR = 0.3 
