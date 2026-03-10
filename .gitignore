@@ -9,7 +9,8 @@
 *.bin
 *.yaml
 *.csv
-
+/output
+/runs
 
 # User-specific files
 *.rsuser

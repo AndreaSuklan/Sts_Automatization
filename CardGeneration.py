@@ -27,7 +27,8 @@ card_data = []
 for folder in CARD_DIR.iterdir():
     for file_path in folder.rglob('*'):
         if file_path.suffix.lower() in ['.png', '.jpg']:
-            card_data.append((file_path.name, file_path.as_posix()))
+            unique_name = f"{folder.name}_{file_path.name}"
+            card_data.append((unique_name, file_path.as_posix()))
 
 class_map = {name: idx for idx, (name, path) in enumerate(card_data)}
 print(f"Successfully loaded {len(card_data)} cards.")

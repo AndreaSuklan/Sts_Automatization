@@ -16,10 +16,10 @@ def train_segmentation_model():
         data=str(YAML_PATH),
         epochs=400,
         rect=True,
-	    imgsz=608,
+	imgsz=608,
         batch=-1,
         workers=8,
-	    device="0"
+	device="0"
     )
     
     print("Training complete!")

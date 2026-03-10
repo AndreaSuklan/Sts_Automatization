@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=yolo_bot_train   # Un nome per riconoscere il tuo lavoro
+#SBATCH --partition=GPU
+#SBATCH --nodes=1                   # Numero di nodi
+#SBATCH --ntasks=1                  # Numero di task
+#SBATCH --cpus-per-task=8           # I worker ottimali di cui parlavamo
+#SBATCH --gpus=V100:1
+#SBATCH --time=2:00:00             # Tempo massimo stimato
+#SBATCH --output=logs/log_addestramento_%j.out  # Salva i print in questo file di testo
+#SBATCH --error=los/log_errore_%j.err          # Salva eventuali errori qui
+
+python TrainCardVision.py
