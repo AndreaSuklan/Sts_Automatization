@@ -27,7 +27,8 @@ card_data = []
 for folder in CARD_DIR.iterdir():
     for file_path in folder.rglob('*'):
         if file_path.suffix.lower() in ['.png', '.jpg']:
-            unique_name = f"{folder.name}_{file_path.name}"
+            rel_path = file_path.relative_to(CARD_DIR).with_suffix('')
+            unique_name = str(rel_path).replace('/', '_').replace('\\', '_')
             card_data.append((unique_name, file_path.as_posix()))
 
 class_map = {name: idx for idx, (name, path) in enumerate(card_data)}
@@ -187,7 +188,7 @@ def generate_dataset():
         for name, idx in sorted_classes:
             f.write(f"  {idx}: {name}\n")
             
-    print(f"Successfully generated {NUM_IMAGES_TO_GENERATE} YOLO segmentation images and labels.")
+    print(f"Successfully generated {iNUM_IMAGES_TO_GENERATE} YOLO segmentation images and labels.")
     print(f"Saved YOLO configuration to {yaml_path}")
 
 if __name__ == "__main__":
