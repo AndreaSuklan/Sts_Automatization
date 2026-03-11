@@ -6,7 +6,7 @@ RUN_NAME = "hand_vision"
 
 WEIGHTS_PATH = MAIN_DIR / "runs" / "segment" / RUN_NAME / "weights" / "best.pt"
 
-SCREENSHOT_NAME = "screenshot_2.jpg" 
+SCREENSHOT_NAME = "screenshot_1.jpg" 
 IMAGE_PATH = MAIN_DIR / "Screenshots" / SCREENSHOT_NAME
 
 def test_on_screenshot():
