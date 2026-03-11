@@ -19,7 +19,7 @@ def train_finder_model():
 
         results = model.train(
             data=str(YAML_PATH),
-            epochs=1,
+            epochs=100,
             imgsz=640,
             batch=128,
             workers=8,

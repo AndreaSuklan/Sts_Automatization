@@ -6,6 +6,6 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --time=2:00:00
 #SBATCH --output=logs/cpu_%j.out
-#SBATCH --error=logs/cpu_errore_%j.err
+#SBATCH --error=logs/cpu_%j.err
 
-python CardGeneration.py
+python Card_Cropper.py
