@@ -187,8 +187,8 @@ def generate_dataset():
         sorted_classes = sorted(class_map.items(), key=lambda item: item[1])
         for name, idx in sorted_classes:
             f.write(f"  {idx}: {name}\n")
-            
-    print(f"Successfully generated {iNUM_IMAGES_TO_GENERATE} YOLO segmentation images and labels.")
+           
+    print(f"Successfully generated {NUM_IMAGES_TO_GENERATE} YOLO segmentation images and labels.")
     print(f"Saved YOLO configuration to {yaml_path}")
 
 if __name__ == "__main__":

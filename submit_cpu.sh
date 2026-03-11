@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --time=2:00:00
-#SBATCH --output=logs/log_addestramento_%j.out
-#SBATCH --error=logs/log_errore_%j.err
+#SBATCH --output=logs/cpu_%j.out
+#SBATCH --error=logs/cpu_errore_%j.err
 
 python CardGeneration.py

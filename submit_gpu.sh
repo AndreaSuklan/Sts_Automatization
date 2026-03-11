@@ -4,9 +4,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --gres=gpu:V100:1
+#SBATCH --gres=gpu:V100:2
 #SBATCH --time=02:00:00
-#SBATCH --output=logs/yolo_train_%j.out
-#SBATCH --error=logs/yolo_train_%j.err
+#SBATCH --mem=64G
+#SBATCH --output=logs/gpu_%j.out
+#SBATCH --error=logs/gpu_%j.err
 
 python Train_CardVision.py
