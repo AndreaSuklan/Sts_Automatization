@@ -2,13 +2,13 @@ from ultralytics import YOLO
 from pathlib import Path
 
 MAIN_DIR = Path.cwd()
-CLS_DATA_DIR = MAIN_DIR / "output" / "cropped_cards" 
+CLS_DATA_DIR = MAIN_DIR / "output" / "cropped_cards"
 RUN_NAME = "card_classifier"
 
 def train_classification_model():
     print("Training Classifier...")
-    
-    model = YOLO("yolov8s-cls.pt") 
+
+    model = YOLO("yolov8m-cls.pt")
 
     results = model.train(
         data=str(CLS_DATA_DIR),

@@ -26,7 +26,8 @@ def train_finder_model():
             device=[0,1],
             name=RUN_NAME,
             exist_ok=True,
-            single_cls=True
+            single_cls=True,
+	    fraction=0.1
         )
 
     print("Finder training complete")
