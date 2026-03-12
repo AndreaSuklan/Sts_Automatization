@@ -10,4 +10,4 @@
 #SBATCH --output=logs/gpu_%j.out
 #SBATCH --error=logs/gpu_%j.err
 
-python Train_CardVision.py
+python Card_Segment.py
