@@ -5,31 +5,44 @@ MAIN_DIR = Path.cwd()
 RUN_NAME = "card_segment"
 
 WEIGHTS_PATH = MAIN_DIR / "runs" / "segment" / RUN_NAME / "weights" / "best.pt"
+IMAGE_PATH = MAIN_DIR / "Screenshots"
 
-SCREENSHOT_NAME = "Screenshot_3.png" 
-IMAGE_PATH = MAIN_DIR / "Screenshots" / SCREENSHOT_NAME
+# Define the save directory explicitly
+SAVE_DIR = IMAGE_PATH / "predictions"
 
-def test_on_screenshot():
+def test_on_folder():
     if not WEIGHTS_PATH.exists():
         print(f"Error: Could not find weights at {WEIGHTS_PATH}")
         return
     if not IMAGE_PATH.exists():
-        print(f"Error: Could not find image at {IMAGE_PATH}")
+        print(f"Error: Could not find image folder at {IMAGE_PATH}")
         return
+
+    # 1. Ensure the output directory exists before saving!
+    SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
     print(f"Loading custom model from {WEIGHTS_PATH}...")
     model = YOLO(str(WEIGHTS_PATH))
 
-    print(f"Running prediction on {IMAGE_PATH}...")
-    # 25% of confidence
-    results = model(str(IMAGE_PATH), conf=0.25) 
+    # 2. Safely grab both .png and .jpg files
+    valid_extensions = {".png", ".jpg", ".jpeg"}
+    images = [p for p in IMAGE_PATH.iterdir() if p.is_file() and p.suffix.lower() in valid_extensions]
 
-    for result in results:
-        
-        # Save the annotated image
-        save_path = MAIN_DIR / "Screenshots" / f"predicted_{SCREENSHOT_NAME}.jpg"
-        result.save(filename=str(save_path))
-        print(f"Saved the annotated result to '{save_path}'")
+    if not images:
+        print(f"No images found in {IMAGE_PATH}")
+        return
+
+    print(f"Found {len(images)} images. Starting predictions...")
+
+    for im in images:
+        # verbose=False stops YOLO from spamming the console for every single image
+        results = model(str(im), conf=0.25, verbose=False) 
+
+        for result in results:
+            # Save the annotated image
+            save_path = SAVE_DIR / f"predicted_{im.name}"
+            result.save(filename=str(save_path))
+            print(f"Saved annotated result to: {save_path.name}")
 
 if __name__ == "__main__":
-    test_on_screenshot()
+    test_on_folder()
