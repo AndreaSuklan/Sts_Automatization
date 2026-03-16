@@ -8,11 +8,10 @@
 *.pth
 *.bin
 *.yaml
-/output**
+/output*
 
-# Except gen_screen_images and its contents
+# Exception
 !/output/gen_screen_images/
-!/output/gen_screen_images/**
 
 
 # User-specific files
