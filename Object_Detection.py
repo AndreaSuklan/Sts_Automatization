@@ -26,11 +26,11 @@ YAML_PATH    = Path.cwd() / "output" / "stage1_dataset" / "data.yaml"
 RUN_NAME     = "sts_detector"
 LAST_WEIGHTS = Path.cwd() / "runs" / "detect" / RUN_NAME / "weights" / "last.pt"
 
-EPOCHS  = 1
+EPOCHS  = 100
 IMGSZ   = 640
-BATCH   = 16
+BATCH   = 64
 WORKERS = 8
-DEVICE  = "cpu"   # list of GPU ids; use 0 for single GPU, "cpu" for CPU
+DEVICE  = [0,1]   # list of GPU ids; use 0 for single GPU, "cpu" for CPU
 DATA_PERCENTAGE = 0.01   # for debugging
 
 # ────────────────────────────────────────────────────────────────── #

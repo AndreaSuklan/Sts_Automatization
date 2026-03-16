@@ -46,7 +46,7 @@ BEST_CKPT       = CKPT_DIR / "best.pt"
 # ── Training hyper-parameters ─────────────────────────────────────
 IMGSZ      = 128    # crops are small icons; 128px is the sweet spot
 BATCH      = 64
-EPOCHS     = 1
+EPOCHS     = 100
 LR         = 1e-3
 VAL_SPLIT  = 0.15
 RANDOM_SEED= 42
@@ -54,7 +54,7 @@ RANDOM_SEED= 42
 # GPU ids to use — mirrors Stage 1 config.
 # DataParallel splits each batch evenly across all listed GPUs.
 # Set to []  to use CPU, or [0] for a single GPU.
-GPU_IDS    = "cpu"
+GPU_IDS    = [0,1]
 WORKERS    = 8   # match Stage 1
 
 # ────────────────────────────────────────────────────────────────── #
