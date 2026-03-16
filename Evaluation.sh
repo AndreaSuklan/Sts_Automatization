@@ -10,4 +10,4 @@
 #SBATCH --output=logs/gpu_%j.out
 #SBATCH --error=logs/gpu_%j.err
 
-python Yolo_Crop.py
+python Eval_ComputerVision.py
