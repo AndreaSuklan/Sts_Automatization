@@ -50,6 +50,7 @@ import shutil
 import multiprocessing
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from __future__ import annotations
 
 try:
     from PIL import Image

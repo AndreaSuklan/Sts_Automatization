@@ -31,7 +31,7 @@ IMGSZ   = 640
 BATCH   = 64
 WORKERS = 8
 DEVICE  = [0,1]   # list of GPU ids; use 0 for single GPU, "cpu" for CPU
-DATA_PERCENTAGE = 0.01   # for debugging
+DATA_PERCENTAGE = 1   # for debugging
 
 # ────────────────────────────────────────────────────────────────── #
 

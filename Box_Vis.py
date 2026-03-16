@@ -1,14 +1,16 @@
 import cv2
 import os
+from pathlib import Path
 
 # --- CONFIGURATION (CUSTOMIZE THESE PATHS) ---
 # Point these to the folders your Slay the Spire mod is saving to!
-IMAGE_DIR = r"C:/Users/andre/Documents/GitHub/Sts_Automatization/output/gen_screen_images"
-LABEL_DIR = r"C:/Users/andre/Documents/GitHub/Sts_Automatization/output/gen_screen_labels"
-CLASSES_FILE = r"C:/Users/andre/Documents/GitHub/Sts_Automatization/output/gen_screen_classes.txt"
+CURR_DIR = Path.cwd() / "output"
+IMAGE_DIR = CURR_DIR / "gen_screen_images"
+LABEL_DIR = CURR_DIR / "gen_screen_labels"
+CLASSES_FILE = CURR_DIR / "gen_screen_classes.txt"
 
 # Where you want the debug images with drawn boxes to be saved
-OUTPUT_DIR = r"C:/Users/andre/Documents/GitHub/Sts_Automatization/output/debug_visualized"
+OUTPUT_DIR = CURR_DIR / "debug_visualized"
 
 def main():
     # Create the output directory if it doesn't exist
