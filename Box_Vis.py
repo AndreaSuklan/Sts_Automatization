@@ -75,7 +75,7 @@ def main():
         cv2.imwrite(out_path, img)
         print(f"Saved debug image: {filename}")
 
-    print("/nAll bounding boxes visualized")
+    print("\nAll bounding boxes visualized")
 
 if __name__ == "__main__":
     main()
