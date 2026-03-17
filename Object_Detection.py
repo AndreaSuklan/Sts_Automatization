@@ -30,12 +30,24 @@ EPOCHS  = 100
 IMGSZ   = 640
 BATCH   = 64
 WORKERS = 8
-DEVICE  = [0,1]   # list of GPU ids; use 0 for single GPU, "cpu" for CPU
+DEVICE  = [0, 1]   # list of GPU ids; use 0 for single GPU, "cpu" for CPU
 DATA_PERCENTAGE = 1   # for debugging
 
 # ────────────────────────────────────────────────────────────────── #
 
+def _ensure_dirs() -> None:
+    """Create all directories this script may write to."""
+    # logs/ for SBATCH output files (also created by the .sh, but safe to
+    # do it here too so the script works when run directly with  python)
+    Path("logs").mkdir(parents=True, exist_ok=True)
+    # YOLO creates runs/detect/<RUN_NAME>/weights/ itself, but pre-creating
+    # the parent avoids a race-condition on some cluster file-systems.
+    (Path.cwd() / "runs" / "detect").mkdir(parents=True, exist_ok=True)
+
+
 def train() -> None:
+    _ensure_dirs()
+
     if LAST_WEIGHTS.exists():
         print(f"Resuming Stage 1 training from {LAST_WEIGHTS}")
         model = YOLO(str(LAST_WEIGHTS))

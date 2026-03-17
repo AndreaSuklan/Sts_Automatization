@@ -27,6 +27,7 @@ NOTES ON HYPER-PARAMETERS
     Yolo_Crop.py to capture the card art frame (strong visual cue).
 """
 
+import sys
 import time
 from pathlib import Path
 
@@ -54,7 +55,7 @@ RANDOM_SEED= 42
 # GPU ids to use — mirrors Stage 1 config.
 # DataParallel splits each batch evenly across all listed GPUs.
 # Set to []  to use CPU, or [0] for a single GPU.
-GPU_IDS    = [0,1]
+GPU_IDS    = [0, 1]
 WORKERS    = 8   # match Stage 1
 
 # ────────────────────────────────────────────────────────────────── #
@@ -62,6 +63,20 @@ WORKERS    = 8   # match Stage 1
 # ImageNet normalisation constants (required for pretrained weights)
 _MEAN = [0.485, 0.456, 0.406]
 _STD  = [0.229, 0.224, 0.225]
+
+
+def _ensure_dirs() -> None:
+    """Create all directories this script may write to."""
+    Path("logs").mkdir(parents=True, exist_ok=True)
+    CKPT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Provide a clear message if the crops folder is missing rather than
+    # letting torchvision throw a cryptic FileNotFoundError later.
+    if not CROPS_DIR.exists() or not any(CROPS_DIR.iterdir()):
+        sys.exit(
+            f"❌  Crops directory not found or empty: {CROPS_DIR}\n"
+            "    Run Yolo_Crop.py first to generate the cropped dataset."
+        )
 
 
 def build_dataloaders() -> tuple[DataLoader, DataLoader, list[str]]:
@@ -125,7 +140,7 @@ def build_model(n_classes: int) -> nn.Module:
 
 
 def train() -> None:
-    CKPT_DIR.mkdir(parents=True, exist_ok=True)
+    _ensure_dirs()
 
     # ── Device setup ──────────────────────────────────────────────
     if GPU_IDS and torch.cuda.is_available():

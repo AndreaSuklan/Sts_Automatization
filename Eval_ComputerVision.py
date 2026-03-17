@@ -19,7 +19,7 @@ OUTPUTS  (all written to  output/eval/)
       └── summary.txt              plain-text report (copy-paste ready)
 
 USAGE
-  python Eval_Models.py [--det-weights PATH] [--cls-weights PATH]
+  python Eval_ComputerVision.py [--det-weights PATH] [--cls-weights PATH]
                         [--data-yaml PATH]   [--crops-dir PATH]
                         [--device cpu|0|0,1] [--n-samples 16]
                         [--topn 30]
@@ -667,9 +667,19 @@ def parse_args():
     return ap.parse_args()
 
 
+def _ensure_dirs() -> None:
+    """Pre-create every output directory so nothing crashes mid-run."""
+    Path("logs").mkdir(parents=True, exist_ok=True)
+    EVAL_DIR.mkdir(parents=True, exist_ok=True)
+    DET_EVAL_DIR.mkdir(parents=True, exist_ok=True)
+    CLS_EVAL_DIR.mkdir(parents=True, exist_ok=True)
+
+
 def main():
     args    = parse_args()
     t_start = time.time()
+
+    _ensure_dirs()
 
     print("\n" + "═" * 60)
     print("  STS MODEL EVALUATOR  —  v1.0")

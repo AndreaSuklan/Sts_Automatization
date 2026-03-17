@@ -131,6 +131,20 @@ _GENERIC_ID = {name: idx for idx, name in enumerate(GENERIC_CLASSES)}
 
 # ──────────────────────────── helpers ───────────────────────────── #
 
+def _ensure_dirs() -> None:
+    """
+    Create every directory this script writes to.
+    Input directories (gen_screen_images, gen_screen_labels) are NOT
+    created here — missing inputs are caught later with a clear error.
+    """
+    Path("logs").mkdir(parents=True, exist_ok=True)
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    CROPS_DIR.mkdir(parents=True, exist_ok=True)
+    # stage1_dataset sub-dirs are created inside build_stage1_dataset(),
+    # but pre-creating the root avoids races on network file-systems.
+    STAGE1_DIR.mkdir(parents=True, exist_ok=True)
+
+
 def load_classes(classes_file: Path) -> dict[int, str]:
     """Return {class_id: specific_class_name} from classes.txt."""
     mapping: dict[int, str] = {}
@@ -186,7 +200,7 @@ def link_or_copy(src: Path, dst: Path) -> bool:
         return False
 
 
-# ──────────────────────── Stage 2: crop worker ──────────────────── #
+# ──────────────────────────── Stage 2: crop worker ──────────────────── #
 
 def process_image(args):
     """
@@ -368,6 +382,8 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
 # ──────────────────────────────── main ──────────────────────────── #
 
 def main():
+    _ensure_dirs()
+
     print("=" * 65)
     print("  STS YOLO CROP EXTRACTOR + STAGE 1 DATASET BUILDER")
     print("=" * 65)

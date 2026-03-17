@@ -13,8 +13,10 @@ CLASSES_FILE = CURR_DIR / "gen_screen_classes.txt"
 OUTPUT_DIR = CURR_DIR / "debug_visualized"
 
 def main():
-    # Create the output directory if it doesn't exist
+    # Create all required output directories upfront
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+    # Also ensure the base output dir exists (other scripts may depend on it)
+    os.makedirs(CURR_DIR, exist_ok=True)
 
     # 1. Load the class dictionary so we can read the actual names
     classes = {}

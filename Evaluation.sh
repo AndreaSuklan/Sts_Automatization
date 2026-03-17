@@ -10,4 +10,6 @@
 #SBATCH --output=logs/gpu_%j.out
 #SBATCH --error=logs/gpu_%j.err
 
+mkdir -p logs
+
 python Eval_ComputerVision.py
