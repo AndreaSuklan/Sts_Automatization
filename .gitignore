@@ -12,7 +12,8 @@
 
 # Exception
 !/output/gen_screen_images/
-
+!/output/gen_screen_labels/
+!/ouput/gen_screen_classes.txt
 
 # User-specific files
 *.rsuser
