@@ -1,0 +1,8 @@
+0  Card
+1  Enemy
+2  HealthBar
+3  Intent
+4  Player
+5  Potion
+6  Power
+7  Relic
