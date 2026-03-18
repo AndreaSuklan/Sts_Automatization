@@ -9,6 +9,7 @@
 #*.bin
 #*.yaml
 #/output*
+/logs
 
 # Exception
 !/output/gen_screen_images/
