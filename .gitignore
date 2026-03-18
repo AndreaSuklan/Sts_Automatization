@@ -3,11 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-*.safetensors
-*.json
-*.pth
-*.bin
-*.yaml
+#*.safetensors
+#*.json
+#*.pth
+#*.bin
+#*.yaml
 #/output*
 
 # Exception
