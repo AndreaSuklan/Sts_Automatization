@@ -1,0 +1,598 @@
+=================================================================
+  STS YOLO CROP EXTRACTOR + STAGE 1 DATASET BUILDER
+=================================================================
+  Images dir   : /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/gen_screen_images
+  Labels dir   : /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/gen_screen_labels
+  Classes file : /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/gen_screen_classes.txt
+  Crops output : /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/cropped_dataset
+  Stage1 output: /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/stage1_dataset
+  Padding      : 8 px
+  Min crop     : 16 px
+  Resize to    : native (no resize)
+  Format       : PNG
+  Workers      : 48
+=================================================================
+  Loaded 557 specific class names.
+
+  Found 100 images → 100 paired with labels.
+
+─── Stage 1 dataset ───────────────────────────────────────
+  Specific classes : 557
+  Generic classes  : 8
+  Train: 85  |  Val: 15
+  Images : 100 hard-linked (zero extra disk space)
+  data.yaml → /orfeo/cephfs/home/ipauser/a.suklan/Sts_Automatization/output/stage1_dataset/data.yaml
+
+─── Stage 2 crops ─────────────────────────────────────────
+
+  Cropping …
+
+  [   10/100]  254 crops saved  |  1.0s elapsed  |  ETA 9s  [   20/100]  632 crops saved  |  1.1s elapsed  |  ETA 4s  [   30/100]  984 crops saved  |  1.2s elapsed  |  ETA 3s  [   40/100]  1401 crops saved  |  1.4s elapsed  |  ETA 2s  [   50/100]  1768 crops saved  |  1.7s elapsed  |  ETA 2s  [   60/100]  2122 crops saved  |  1.9s elapsed  |  ETA 1s  [   70/100]  2436 crops saved  |  2.1s elapsed  |  ETA 1s  [   80/100]  2776 crops saved  |  2.1s elapsed  |  ETA 1s  [   90/100]  3157 crops saved  |  2.2s elapsed  |  ETA 0s  [  100/100]  3564 crops saved  |  2.3s elapsed  |  ETA 0s
+
+=================================================================
+  ✅  DONE  in 2.3s
+  Crops saved    : 3564
+  Crops skipped  : 0  (too small or bad box)
+  Errors         : 0
+=================================================================
+
+  CROP CLASS SUMMARY  (crops per class):
+
+    Potion_Potion Slot           198  ████████████████████████████████████████
+    HealthBar_Enemy              194  ████████████████████████████████████████
+    HealthBar_Player             100  █████████████████████████
+    Player_IRONCLAD              100  █████████████████████████
+    Intent_ATTACK                 82  ████████████████████
+    Intent_ATTACK_DEBUFF          43  ██████████
+    Relic_Nunchaku                42  ██████████
+    Relic_PreservedInsect         40  ██████████
+    Relic_Omamori                 37  █████████
+    Relic_Red Skull               37  █████████
+    Relic_War Paint               36  █████████
+    Relic_Lantern                 35  ████████
+    Relic_Strawberry              35  ████████
+    Relic_Akabeko                 32  ████████
+    Relic_DataDisk                32  ████████
+    Relic_Happy Flower            32  ████████
+    Relic_Potion Belt             32  ████████
+    Relic_Bag of Marbles          31  ███████
+    Relic_MealTicket              31  ███████
+    Relic_Ancient Tea Set         29  ███████
+    Relic_Pen Nib                 29  ███████
+    Relic_Toy Ornithopter         29  ███████
+    Relic_Vajra                   28  ███████
+    Relic_Whetstone               28  ███████
+    Relic_Bag of Preparation      27  ██████
+    Relic_Bronze Scales           26  ██████
+    Relic_Smiling Mask            26  ██████
+    Relic_Blood Vial              25  ██████
+    Relic_Boot                    25  ██████
+    Relic_Juzu Bracelet           25  ██████
+    Relic_Orichalcum              25  ██████
+    Relic_Snake Skull             25  ██████
+    Relic_Art of War              24  ██████
+    Relic_Dream Catcher           23  █████
+    Relic_Regal Pillow            23  █████
+    Relic_Centennial Puzzle       22  █████
+    Relic_Oddly Smooth Stone      22  █████
+    Relic_Tiny Chest              22  █████
+    Relic_Anchor                  21  █████
+    Relic_MawBank                 21  █████
+    Relic_CeramicFish             20  █████
+    Relic_Damaru                  16  ████
+    Intent_DEBUFF                 15  ███
+    Potion_CultistPotion          15  ███
+    Potion_ElixirPotion           14  ███
+    Potion_EntropicBrew           14  ███
+    Potion_FearPotion             14  ███
+    Potion_LiquidBronze           13  ███
+    Potion_Regen Potion           13  ███
+    Potion_Weak Potion            13  ███
+    Intent_BUFF                   12  ███
+    Intent_STRONG_DEBUFF          12  ███
+    Potion_AttackPotion           12  ███
+    Potion_BloodPotion            12  ███
+    Potion_ColorlessPotion        12  ███
+    Potion_SneckoOil              12  ███
+    Potion_SteroidPotion          12  ███
+    Power_amplify                 11  ██
+    Potion_EssenceOfSteel         10  ██
+    Potion_Explosive Potion       10  ██
+    Potion_LiquidMemories         10  ██
+    Power_deva2                   10  ██
+    Power_devotion                10  ██
+    Power_draw2                   10  ██
+    Power_reactive                10  ██
+    Intent_UNKNOWN                 9  ██
+    Potion_Swift Potion            9  ██
+    Power_ai                       9  ██
+    Power_brutality                9  ██
+    Power_envenom                  9  ██
+    Power_fading                   9  ██
+    Power_frail                    9  ██
+    Power_hello                    9  ██
+    Power_int                      9  ██
+    Power_rupture                  9  ██
+    Power_sporeCloud               9  ██
+    Power_strength                 9  ██
+    Power_tools                    9  ██
+    Enemy_FuzzyLouseDefensive      8  ██
+    Potion_SkillPotion             8  ██
+    Potion_SmokeBomb               8  ██
+    Potion_Strength Potion         8  ██
+    Power_accuracy                 8  ██
+    Power_afterImage               8  ██
+    Power_entangle                 8  ██
+    Power_forcefield               8  ██
+    Power_lockon                   8  ██
+    Power_loop                     8  ██
+    Power_master_smite             8  ██
+    Power_platedarmor              8  ██
+    Power_the_bomb                 8  ██
+    Potion_DistilledChaos          7  █
+    Potion_Fire Potion             7  █
+    Potion_HeartOfIron             7  █
+    Potion_PowerPotion             7  █
+    Power_barricade                7  █
+    Power_curiosity                7  █
+    Power_demonForm                7  █
+    Power_end_turn_death           7  █
+    Power_flameBarrier             7  █
+    Power_flex                     7  █
+    Power_flight                   7  █
+    Power_mantra                   7  █
+    Power_master_reality           7  █
+    Power_omega                    7  █
+    Power_path_to_victory          7  █
+    Power_penNib                   7  █
+    Card_ForeignInfluence          6  █
+    Enemy_AcidSlime_M              6  █
+    Enemy_AwakenedOne              6  █
+    Enemy_Deca                     6  █
+    Enemy_GremlinFat               6  █
+    Enemy_SpikeSlime_S             6  █
+    Enemy_TimeEater                6  █
+    Intent_DEFEND_BUFF             6  █
+    Potion_Ancient Potion          6  █
+    Potion_BlessingOfTheForge      6  █
+    Potion_Block Potion            6  █
+    Potion_DuplicationPotion       6  █
+    Potion_Energy Potion           6  █
+    Potion_GamblersBrew            6  █
+    Potion_SpeedPotion             6  █
+    Power_armor                    6  █
+    Power_bias                     6  █
+    Power_blur                     6  █
+    Power_cExplosion               6  █
+    Power_channel                  6  █
+    Power_controlled_change        6  █
+    Power_doubleDamage             6  █
+    Power_draw                     6  █
+    Power_energized_blue           6  █
+    Power_fumes                    6  █
+    Power_heartDef                 6  █
+    Power_hex                      6  █
+    Power_intangible               6  █
+    Power_mastery                  6  █
+    Power_mental_fortress          6  █
+    Power_noBlock                  6  █
+    Power_noDraw                   6  █
+    Power_painfulStabs             6  █
+    Power_panache                  6  █
+    Power_rushdown                 6  █
+    Power_shackle                  6  █
+    Power_shift                    6  █
+    Power_skillBurn                6  █
+    Power_swivel                   6  █
+    Power_thorns                   6  █
+    Power_wraithForm               6  █
+    Card_All For One               5  █
+    Card_Carnage                   5  █
+    Card_Searing Blow              5  █
+    Enemy_Champ                    5  █
+    Enemy_CorruptHeart             5  █
+    Enemy_Hexaghost                5  █
+    Enemy_Repulsor                 5  █
+    Potion_FairyPotion             5  █
+    Potion_Fruit Juice             5  █
+    Power_anger                    5  █
+    Power_artifact                 5  █
+    Power_backAttack               5  █
+    Power_closeUp                  5  █
+    Power_echo                     5  █
+    Power_energized_green          5  █
+    Power_evolve                   5  █
+    Power_explosive                5  █
+    Power_fasting                  5  █
+    Power_firebreathing            5  █
+    Power_heatsink                 5  █
+    Power_hymn                     5  █
+    Power_infiniteBlades           5  █
+    Power_malleable                5  █
+    Power_master_protect           5  █
+    Power_modeShift                5  █
+    Power_noPain                   5  █
+    Power_no_skill                 5  █
+    Power_phantasmal               5  █
+    Power_pressure_points          5  █
+    Power_rebound                  5  █
+    Power_repair                   5  █
+    Power_retain                   5  █
+    Power_ritual                   5  █
+    Power_sadistic                 5  █
+    Power_sharpHide                5  █
+    Power_slow                     5  █
+    Power_stasis                   5  █
+    Power_static_discharge         5  █
+    Power_storm                    5  █
+    Power_unawakened               5  █
+    Power_vigor                    5  █
+    Power_vulnerable               5  █
+    Power_wireheading              5  █
+    Card_Blasphemy                 4  █
+    Card_Blur                      4  █
+    Card_Consecrate                4  █
+    Card_Dagger Spray              4  █
+    Card_Dramatic Entrance         4  █
+    Card_EmptyFist                 4  █
+    Card_EmptyMind                 4  █
+    Card_FearNoEvil                4  █
+    Card_Havoc                     4  █
+    Card_Heatsinks                 4  █
+    Card_Impatience                4  █
+    Card_Impervious                4  █
+    Card_JustLucky                 4  █
+    Card_LikeWater                 4  █
+    Card_Parasite                  4  █
+    Card_Seek                      4  █
+    Card_Self Repair               4  █
+    Card_Skewer                    4  █
+    Card_Slice                     4  █
+    Card_Tactician                 4  █
+    Card_The Bomb                  4  █
+    Card_ThirdEye                  4  █
+    Enemy_AcidSlime_L              4  █
+    Enemy_Chosen                   4  █
+    Enemy_Darkling                 4  █
+    Enemy_Donu                     4  █
+    Enemy_FungiBeast               4  █
+    Enemy_GiantHead                4  █
+    Enemy_GremlinWizard            4  █
+    Enemy_Nemesis                  4  █
+    Enemy_Serpent                  4  █
+    Enemy_Shelled Parasite         4  █
+    Enemy_SlaverBlue               4  █
+    Enemy_SlaverBoss               4  █
+    Enemy_SlaverRed                4  █
+    Enemy_Snecko                   4  █
+    Enemy_SpikeSlime_M             4  █
+    Intent_ATTACK_DEFEND           4  █
+    Power_attackBurn               4  █
+    Power_beat                     4  █
+    Power_berserk                  4  █
+    Power_book                     4  █
+    Power_confusion                4  █
+    Power_conserve                 4  █
+    Power_defenseNext              4  █
+    Power_dexterity                4  █
+    Power_minion                   4  █
+    Power_poison                   4  █
+    Power_split                    4  █
+    Power_thievery                 4  █
+    Power_wave_of_the_hand         4  █
+    Card_Adaptation                3  
+    Card_Anger                     3  
+    Card_Apotheosis                3  
+    Card_Armaments                 3  
+    Card_Bandage Up                3  
+    Card_Beta                      3  
+    Card_Bludgeon                  3  
+    Card_Bouncing Flask            3  
+    Card_CarveReality              3  
+    Card_ClearTheMind              3  
+    Card_Collect                   3  
+    Card_Combust                   3  
+    Card_Compile Driver            3  
+    Card_Dark Shackles             3  
+    Card_Defend_P                  3  
+    Card_Deflect                   3  
+    Card_Envenom                   3  
+    Card_Eruption                  3  
+    Card_Eviscerate                3  
+    Card_Fiend Fire                3  
+    Card_Flash of Steel            3  
+    Card_FlurryOfBlows             3  
+    Card_Genetic Algorithm         3  
+    Card_Halt                      3  
+    Card_Insight                   3  
+    Card_Leap                      3  
+    Card_LiveForever               3  
+    Card_Masterful Stab            3  
+    Card_Metamorphosis             3  
+    Card_Panache                   3  
+    Card_PanicButton               3  
+    Card_Perseverance              3  
+    Card_Prostrate                 3  
+    Card_Ragnarok                  3  
+    Card_ReachHeaven               3  
+    Card_Reboot                    3  
+    Card_Setup                     3  
+    Card_Storm of Steel            3  
+    Card_Tools of the Trade        3  
+    Card_Vengeance                 3  
+    Card_WheelKick                 3  
+    Enemy_BanditBear               3  
+    Enemy_BanditLeader             3  
+    Enemy_Exploder                 3  
+    Enemy_GremlinLeader            3  
+    Enemy_JawWorm                  3  
+    Enemy_Lagavulin                3  
+    Enemy_Looter                   3  
+    Enemy_Maw                      3  
+    Enemy_Sentry                   3  
+    Enemy_SphericGuardian          3  
+    Enemy_SpireShield              3  
+    Intent_ATTACK_BUFF             3  
+    Intent_DEFEND                  3  
+    Intent_SLEEP                   3  
+    Potion_Dexterity Potion        3  
+    Power_backAttack2              3  
+    Power_burst                    3  
+    Power_carddraw                 3  
+    Power_choke                    3  
+    Power_constricted              3  
+    Power_darkembrace              3  
+    Power_deva                     3  
+    Power_doubleTap                3  
+    Power_focus                    3  
+    Power_infinitegreen            3  
+    Power_thousandCuts             3  
+    Power_time                     3  
+    Power_weak                     3  
+    Card_A Thousand Cuts           2  
+    Card_Acrobatics                2  
+    Card_After Image               2  
+    Card_Backflip                  2  
+    Card_Ball Lightning            2  
+    Card_Bash                      2  
+    Card_BattleHymn                2  
+    Card_Bite                      2  
+    Card_Blade Dance               2  
+    Card_Blizzard                  2  
+    Card_Bullet Time               2  
+    Card_Calculated Gamble         2  
+    Card_Choke                     2  
+    Card_Cloak And Dagger          2  
+    Card_Concentrate               2  
+    Card_Conclude                  2  
+    Card_ConjureBlade              2  
+    Card_Coolheaded                2  
+    Card_Corruption                2  
+    Card_CurseOfTheBell            2  
+    Card_Dazed                     2  
+    Card_Decay                     2  
+    Card_Demon Form                2  
+    Card_DeusExMachina             2  
+    Card_Devotion                  2  
+    Card_Disarm                    2  
+    Card_Discovery                 2  
+    Card_Double Tap                2  
+    Card_Dropkick                  2  
+    Card_Dualcast                  2  
+    Card_Establishment             2  
+    Card_Fasting2                  2  
+    Card_Feed                      2  
+    Card_Finesse                   2  
+    Card_Flex                      2  
+    Card_FollowUp                  2  
+    Card_Ghostly Armor             2  
+    Card_Go for the Eyes           2  
+    Card_Headbutt                  2  
+    Card_Hyperbeam                 2  
+    Card_Infernal Blade            2  
+    Card_Infinite Blades           2  
+    Card_Lockon                    2  
+    Card_Loop                      2  
+    Card_Magnetism                 2  
+    Card_Metallicize               2  
+    Card_Noxious Fumes             2  
+    Card_Omniscience               2  
+    Card_Outmaneuver               2  
+    Card_Pain                      2  
+    Card_PiercingWail              2  
+    Card_Pommel Strike             2  
+    Card_Pride                     2  
+    Card_Reaper                    2  
+    Card_Redo                      2  
+    Card_Reprogram                 2  
+    Card_Riddle With Holes         2  
+    Card_Sadistic Nature           2  
+    Card_Scrape                    2  
+    Card_Scrawl                    2  
+    Card_Shame                     2  
+    Card_Shockwave                 2  
+    Card_Shrug It Off              2  
+    Card_Spot Weakness             2  
+    Card_Static Discharge          2  
+    Card_Sucker Punch              2  
+    Card_Thunder Strike            2  
+    Card_True Grit                 2  
+    Card_Undo                      2  
+    Card_Venomology                2  
+    Card_Void                      2  
+    Card_Wallop                    2  
+    Card_Warcry                    2  
+    Card_Weave                     2  
+    Card_Well Laid Plans           2  
+    Card_Whirlwind                 2  
+    Card_Worship                   2  
+    Card_WreathOfFlame             2  
+    Card_Writhe                    2  
+    Card_Zap                       2  
+    Enemy_BanditChild              2  
+    Enemy_BookOfStabbing           2  
+    Enemy_Byrd                     2  
+    Enemy_Dagger                   2  
+    Enemy_FuzzyLouseNormal         2  
+    Enemy_GremlinNob               2  
+    Enemy_GremlinWarrior           2  
+    Enemy_Healer                   2  
+    Enemy_Orb Walker               2  
+    Enemy_Reptomancer              2  
+    Enemy_SlimeBoss                2  
+    Enemy_Spiker                   2  
+    Enemy_TheCollector             2  
+    Enemy_WrithingMass             2  
+    Intent_DEFEND_DEBUFF           2  
+    Power_combust                  2  
+    Power_corruption               2  
+    Power_juggernaut               2  
+    Power_magnet                   2  
+    Power_mayhem                   2  
+    Power_nightmare                2  
+    Power_nirvana                  2  
+    Power_no_stance                2  
+    Power_regen                    2  
+    Power_regrow                   2  
+    Power_surrounded               2  
+    Power_talk_to_hand             2  
+    Card_Accuracy                  1  
+    Card_Aggregate                 1  
+    Card_All Out Attack            1  
+    Card_Alpha                     1  
+    Card_AscendersBane             1  
+    Card_Backstab                  1  
+    Card_Bane                      1  
+    Card_Barricade                 1  
+    Card_Berserk                   1  
+    Card_Biased Cognition          1  
+    Card_Blind                     1  
+    Card_Bloodletting              1  
+    Card_BootSequence              1  
+    Card_BowlingBash               1  
+    Card_Brilliance                1  
+    Card_Buffer                    1  
+    Card_Burn                      1  
+    Card_Caltrops                  1  
+    Card_Capacitor                 1  
+    Card_Chaos                     1  
+    Card_Clash                     1  
+    Card_Conserve Battery          1  
+    Card_Consume                   1  
+    Card_Core Surge                1  
+    Card_Corpse Explosion          1  
+    Card_Crippling Poison          1  
+    Card_CrushJoints               1  
+    Card_CutThroughFate            1  
+    Card_Dark Embrace              1  
+    Card_Darkness                  1  
+    Card_Dash                      1  
+    Card_DeceiveReality            1  
+    Card_Defend_R                  1  
+    Card_Defragment                1  
+    Card_Dodge and Roll            1  
+    Card_Doppelganger              1  
+    Card_Double Energy             1  
+    Card_Doubt                     1  
+    Card_Dual Wield                1  
+    Card_Echo Form                 1  
+    Card_Entrench                  1  
+    Card_Escape Plan               1  
+    Card_Evaluate                  1  
+    Card_Evolve                    1  
+    Card_FTL                       1  
+    Card_FameAndFortune            1  
+    Card_Flame Barrier             1  
+    Card_Flechettes                1  
+    Card_Flying Knee               1  
+    Card_FlyingSleeves             1  
+    Card_Forethought               1  
+    Card_Fusion                    1  
+    Card_Gash                      1  
+    Card_Ghostly                   1  
+    Card_Glacier                   1  
+    Card_Glass Knife               1  
+    Card_Good Instincts            1  
+    Card_Heavy Blade               1  
+    Card_Hemokinesis               1  
+    Card_Hologram                  1  
+    Card_Inflame                   1  
+    Card_InnerPeace                1  
+    Card_Intimidate                1  
+    Card_Iron Wave                 1  
+    Card_Jack Of All Trades        1  
+    Card_Juggernaut                1  
+    Card_Leg Sweep                 1  
+    Card_LessonLearned             1  
+    Card_Limit Break               1  
+    Card_Madness                   1  
+    Card_Meteor Strike             1  
+    Card_Mind Blast                1  
+    Card_Neutralize                1  
+    Card_Night Terror              1  
+    Card_Normality                 1  
+    Card_Omega                     1  
+    Card_PathToVictory             1  
+    Card_Perfected Strike          1  
+    Card_Phantasmal Killer         1  
+    Card_Poisoned Stab             1  
+    Card_Pray                      1  
+    Card_Protect                   1  
+    Card_Purity                    1  
+    Card_Quick Slash               1  
+    Card_Rage                      1  
+    Card_Rainbow                   1  
+    Card_Rampage                   1  
+    Card_Reckless Charge           1  
+    Card_Recycle                   1  
+    Card_Reflex                    1  
+    Card_Rip and Tear              1  
+    Card_RitualDagger              1  
+    Card_Safety                    1  
+    Card_SandsOfTime               1  
+    Card_SashWhip                  1  
+    Card_Second Wind               1  
+    Card_Secret Technique          1  
+    Card_Shiv                      1  
+    Card_SignatureMove             1  
+    Card_SpiritShield              1  
+    Card_Steam                     1  
+    Card_Steam Power               1  
+    Card_Storm                     1  
+    Card_Strike_B                  1  
+    Card_Sunder                    1  
+    Card_Survivor                  1  
+    Card_Sweeping Beam             1  
+    Card_Swift Strike              1  
+    Card_Swivel                    1  
+    Card_Sword Boomerang           1  
+    Card_Tantrum                   1  
+    Card_Tempest                   1  
+    Card_Terror                    1  
+    Card_Thinking Ahead            1  
+    Card_ThroughViolence           1  
+    Card_Transmutation             1  
+    Card_Turbo                     1  
+    Card_Twin Strike               1  
+    Card_Uppercut                  1  
+    Card_Vigilance                 1  
+    Card_Violence                  1  
+    Card_WaveOfTheHand             1  
+    Card_Wild Strike               1  
+    Card_WindmillStrike            1  
+    Card_Wish                      1  
+    Card_Wound                     1  
+    Enemy_AcidSlime_S              1  
+    Enemy_BronzeAutomaton          1  
+    Enemy_Cultist                  1  
+    Enemy_GremlinTsundere          1  
+    Enemy_Mugger                   1  
+    Enemy_SnakePlant               1  
+    Enemy_SpireSpear               1  
+    Enemy_TheGuardian              1  
+    Enemy_Transient                1  
+    Power_buffer                   1  
+    Power_lessdraw                 1  
+    Power_like_water               1  
+    Power_noattack                 1  
+
