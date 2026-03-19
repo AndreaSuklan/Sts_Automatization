@@ -1,0 +1,658 @@
+Card_Beam Cell
+Card_InnerPeace
+Card_Flex
+Card_Enlightenment
+Relic_Toy Ornithopter
+Relic_Whetstone
+Relic_Oddly Smooth Stone
+Relic_CeramicFish
+Relic_Boot
+Potion_Block Potion
+Potion_Weak Potion
+Potion_BloodPotion
+Potion_SmokeBomb
+Potion_Potion Slot
+Player_IRONCLAD
+HealthBar_Player
+Power_amplify
+Power_corruption
+Power_fading
+Enemy_SlimeBoss
+HealthBar_Enemy
+Intent_STRONG_DEBUFF
+Card_Power Through
+Card_TalkToTheHand
+Card_All Out Attack
+Card_Protect
+Card_Undo
+Card_Hemokinesis
+Relic_Bag of Preparation
+Relic_Vajra
+Relic_Smiling Mask
+Relic_Nunchaku
+Relic_PreservedInsect
+Relic_Bag of Marbles
+Relic_War Paint
+Relic_Damaru
+Relic_Blood Vial
+Relic_Anchor
+Relic_DataDisk
+Potion_AttackPotion
+Potion_Explosive Potion
+Power_thousandCuts
+Power_berserk
+Power_modeShift
+Power_unawakened
+Power_repair
+Power_lockon
+Enemy_FuzzyLouseDefensive
+Intent_ATTACK
+Power_weak
+Power_forcefield
+Power_burst
+Power_vigor
+Enemy_BronzeAutomaton
+Power_entangle
+Power_pressure_points
+Power_magnet
+Enemy_Dagger
+Card_Strike_P
+Card_Blasphemy
+Card_Panacea
+Card_Juggernaut
+Card_Iron Wave
+Card_Indignation
+Relic_Ancient Tea Set
+Relic_Bronze Scales
+Relic_Red Skull
+Relic_MawBank
+Potion_CultistPotion
+Power_sporeCloud
+Power_confusion
+Enemy_GremlinTsundere
+Intent_DEFEND
+Power_conserve
+Power_shift
+Power_hello
+Enemy_BookOfStabbing
+Power_rushdown
+Power_sadistic
+Power_bias
+Power_energized_green
+Enemy_Repulsor
+Intent_DEBUFF
+Card_Twin Strike
+Card_EmptyFist
+Card_Ball Lightning
+Card_Wish
+Card_Concentrate
+Card_Secret Weapon
+Card_Defend_B
+Card_Endless Agony
+Relic_Tiny Chest
+Relic_MealTicket
+Relic_Strawberry
+Relic_Lantern
+Potion_Swift Potion
+Potion_PowerPotion
+Power_beat
+Power_time
+Power_poison
+Power_regrow
+Power_combust
+Enemy_FuzzyLouseNormal
+Power_choke
+Power_nirvana
+Enemy_AcidSlime_S
+Card_FameAndFortune
+Relic_Juzu Bracelet
+Relic_Centennial Puzzle
+Relic_Orichalcum
+Relic_Art of War
+Potion_Fruit Juice
+Potion_GamblersBrew
+Potion_EntropicBrew
+Power_noattack
+Power_minion
+Power_noDraw
+Power_carddraw
+Power_anger
+Power_thorns
+Power_book
+Enemy_CorruptHeart
+Power_ai
+Power_closeUp
+Power_mastery
+Enemy_SpireSpear
+Card_BecomeAlmighty
+Card_Worship
+Card_Brutality
+Relic_Snake Skull
+Relic_Akabeko
+Relic_Regal Pillow
+Relic_Potion Belt
+Potion_LiquidBronze
+Power_artifact
+Power_afterImage
+Power_mantra
+Power_armor
+Power_flameBarrier
+Power_shackle
+Enemy_Byrd
+Enemy_Chosen
+Card_Bludgeon
+Potion_ColorlessPotion
+Potion_BlessingOfTheForge
+Potion_HeartOfIron
+Power_static_discharge
+Power_establishment
+Power_ritual
+Enemy_Lagavulin
+Intent_SLEEP
+Power_fasting
+Power_stasis
+Power_split
+Enemy_GremlinThief
+Power_end_turn_death
+Power_master_smite
+Enemy_TheCollector
+Intent_UNKNOWN
+Card_Shockwave
+Card_Melter
+Card_Catalyst
+Card_Darkness
+Relic_Omamori
+Power_doubleDamage
+Power_barricade
+Enemy_JawWorm
+Intent_ATTACK_DEFEND
+Power_infiniteBlades
+Enemy_GremlinNob
+Intent_ATTACK_DEBUFF
+Card_FollowUp
+Card_Buffer
+Relic_Happy Flower
+Potion_Energy Potion
+Power_wave_of_the_hand
+Power_controlled_change
+Power_painfulStabs
+Power_doubleTap
+Enemy_Reptomancer
+Card_Acrobatics
+Card_Havoc
+Card_Biased Cognition
+Card_Choke
+Relic_Dream Catcher
+Potion_Regen Potion
+Potion_SteroidPotion
+Power_omega
+Power_panache
+Power_deva2
+Enemy_SpireShield
+Card_Fission
+Card_Expunger
+Card_Burn
+Card_ConjureBlade
+Card_Streamline
+Card_Well Laid Plans
+Card_Outmaneuver
+Card_MentalFortress
+Relic_Pen Nib
+Potion_SpeedPotion
+Power_dexterity
+Power_strength
+Power_intangible
+Power_explosive
+Power_buffer
+Enemy_Sentry
+Power_phantasmal
+Enemy_GiantHead
+Card_Judgement
+Card_Hello World
+Card_Shame
+Card_Crippling Poison
+Card_Infinite Blades
+Potion_LiquidMemories
+Power_hymn
+Intent_BUFF
+Enemy_BanditLeader
+Card_Echo Form
+Card_Shiv
+Power_rebound
+Enemy_Cultist
+Power_blur
+Card_Rainbow
+Card_Bullet Time
+Card_Coolheaded
+Power_curiosity
+Power_wraithForm
+Power_draw2
+Card_Finesse
+Card_Pommel Strike
+Card_Swift Strike
+Card_Burst
+Card_All For One
+Card_Injury
+Card_Creative AI
+Card_ForeignInfluence
+Card_Wild Strike
+Potion_Ancient Potion
+Power_noPain
+Power_energized_blue
+Power_constricted
+Power_backAttack
+Enemy_Deca
+Card_Clash
+Card_Finisher
+Card_Bandage Up
+Card_Omniscience
+Card_Thinking Ahead
+Card_Searing Blow
+Card_Glacier
+Card_Safety
+Card_Stack
+Card_Defragment
+Potion_Fire Potion
+Potion_FairyPotion
+Power_platedarmor
+Enemy_GremlinWarrior
+Power_devotion
+Power_evolve
+Enemy_SpikeSlime_S
+Card_Pray
+Card_Fasting2
+Card_White Noise
+Power_infinitegreen
+Power_envenom
+Power_flight
+Enemy_GremlinFat
+Power_hex
+Power_cExplosion
+Power_loop
+Card_LikeWater
+Potion_SkillPotion
+Power_heartDef
+Power_malleable
+Power_brutality
+Power_attackBurn
+Power_swivel
+Enemy_Hexaghost
+Enemy_Shelled Parasite
+Intent_ATTACK_BUFF
+Power_slow
+Enemy_TimeEater
+Card_Thunderclap
+Card_Calculated Gamble
+Card_Sunder
+Card_Defend_P
+Card_Dagger Spray
+Card_Headbutt
+Card_Demon Form
+Potion_DuplicationPotion
+Power_like_water
+Power_echo
+Power_demonForm
+Power_fumes
+Power_thievery
+Power_deva
+Enemy_AwakenedOne
+Card_WindmillStrike
+Power_regen
+Card_Skewer
+Card_Clothesline
+Card_Meditate
+Potion_SneckoOil
+Potion_EssenceOfSteel
+Power_path_to_victory
+Power_retain
+Power_talk_to_hand
+Card_Eviscerate
+Card_Bash
+Card_Quick Slash
+Card_JustLucky
+Card_Capacitor
+Power_the_bomb
+Power_storm
+Enemy_Exploder
+Card_Unload
+Card_Tactician
+Card_The Bomb
+Enemy_BanditChild
+Card_Consecrate
+Card_Pain
+Card_Rip and Tear
+Card_Self Repair
+Potion_ElixirPotion
+Power_backAttack2
+Power_firebreathing
+Power_int
+Power_no_skill
+Enemy_BanditBear
+Enemy_Darkling
+Intent_DEFEND_BUFF
+Card_Battle Trance
+Card_Dash
+Card_Recycle
+Card_Meteor Strike
+Potion_FearPotion
+Power_draw
+Enemy_Champ
+Card_Conclude
+Card_Bouncing Flask
+Card_Panache
+Card_Seek
+Card_Go for the Eyes
+Card_Auto Shields
+Card_Heavy Blade
+Card_Body Slam
+Power_wireheading
+Enemy_FungiBeast
+Card_Sever Soul
+Card_Deep Breath
+Card_Berserk
+Card_Secret Technique
+Card_Blade Dance
+Card_Ghostly Armor
+Potion_Strength Potion
+Power_noBlock
+Power_mayhem
+Enemy_Maw
+Card_Night Terror
+Card_EmptyBody
+Card_Wallop
+Card_Eruption
+Card_Leap
+Card_Doubt
+Card_Crescendo
+Power_mental_fortress
+Power_flex
+Enemy_GremlinLeader
+Power_penNib
+Card_AscendersBane
+Power_channel
+Card_FTL
+Card_Wraith Form v2
+Card_WaveOfTheHand
+Card_A Thousand Cuts
+Card_Mayhem
+Potion_DistilledChaos
+Power_defenseNext
+Card_Intimidate
+Card_Dual Wield
+Potion_Dexterity Potion
+Enemy_Mugger
+Enemy_Donu
+Card_Carnage
+Card_Violence
+Card_SandsOfTime
+Card_Exhume
+Card_Disarm
+Card_Uppercut
+Power_darkembrace
+Card_Multi-Cast
+Card_Forethought
+Card_SashWhip
+Card_Tantrum
+Card_Grand Finale
+Enemy_GremlinWizard
+Enemy_Serpent
+Card_Chrysalis
+Card_Cloak And Dagger
+Card_Steam Power
+Power_rupture
+Power_juggernaut
+Card_Alpha
+Card_Barricade
+Enemy_SlaverBlue
+Power_vulnerable
+Card_Spot Weakness
+Power_lessdraw
+Card_Deflect
+Card_Shrug It Off
+Card_Doppelganger
+Card_Study
+Card_Entrench
+Power_nightmare
+Power_focus
+Power_heatsink
+Card_Dagger Throw
+Card_Regret
+Card_Turbo
+Card_ThroughViolence
+Card_Necronomicurse
+Enemy_Nemesis
+Card_Beta
+Power_skillBurn
+Power_master_reality
+Enemy_SlaverBoss
+Card_Pummel
+Card_Storm of Steel
+Card_Flechettes
+Card_Ghostly
+Card_Sucker Punch
+Card_Collect
+Card_WheelKick
+Card_Halt
+Power_tools
+Card_Cleave
+Card_Fusion
+Card_Clumsy
+Card_Storm
+Card_Dark Shackles
+Enemy_Orb Walker
+Card_Barrage
+Card_Combust
+Card_Prepared
+Card_Terror
+Enemy_WrithingMass
+Power_accuracy
+Enemy_AcidSlime_M
+Card_Good Instincts
+Card_Steam
+Card_WreathOfFlame
+Card_Corpse Explosion
+Card_Offering
+Power_master_protect
+Power_no_stance
+Card_Backflip
+Card_Aggregate
+Card_Thunder Strike
+Card_Deadly Poison
+Card_Armaments
+Card_Predator
+Card_Riddle With Holes
+Card_SignatureMove
+Enemy_AcidSlime_L
+Card_FearNoEvil
+Card_Jack Of All Trades
+Card_Smite
+Card_Burning Pact
+Power_surrounded
+Enemy_Snecko
+Card_Rampage
+Card_Noxious Fumes
+Card_Sanctity
+Card_Loop
+Card_Defend_G
+Enemy_Transient
+Card_Rebound
+Card_Dramatic Entrance
+Card_CutThroughFate
+Card_BootSequence
+Power_reactive
+Enemy_Healer
+Power_frail
+Card_Skim
+Enemy_Centurion
+Card_BowlingBash
+Card_Chaos
+Card_Prostrate
+Card_Blood for Blood
+Card_Mind Blast
+Card_Decay
+Card_Redo
+Card_Escape Plan
+Card_Force Field
+Card_DeceiveReality
+Card_Cold Snap
+Card_Underhanded Strike
+Card_Die Die Die
+Card_Swivel
+Card_Limit Break
+Card_Envenom
+Card_Doom and Gloom
+Card_Dropkick
+Card_Reprogram
+Card_Chill
+Card_Reflex
+Card_Venomology
+Card_Infernal Blade
+Card_Vault
+Card_Brilliance
+Card_Miracle
+Card_Core Surge
+Card_Purity
+Card_Genetic Algorithm
+Card_True Grit
+Enemy_SlaverRed
+Card_CrushJoints
+Card_Double Tap
+Card_Vengeance
+Card_CurseOfTheBell
+Card_Metamorphosis
+Card_Normality
+Card_Reaper
+Power_sharpHide
+Card_Blizzard
+Card_Fire Breathing
+Power_BackAttack
+Card_Bite
+Enemy_TheGuardian
+Card_Impervious
+Enemy_Looter
+Card_Lockon
+Card_Devotion
+Card_Perfected Strike
+Card_Ragnarok
+Card_Metallicize
+Card_Impatience
+Card_Scrape
+Card_Feed
+Card_Scrawl
+Card_Insight
+Card_Hyperbeam
+Card_Tools of the Trade
+Card_BattleHymn
+Card_Warcry
+Card_Masterful Stab
+Card_Phantasmal Killer
+Card_Slice
+Enemy_Spiker
+Card_Rage
+Card_Neutralize
+Card_Nirvana
+Card_Sweeping Beam
+Card_Flying Knee
+Card_DevaForm
+Card_Strike_B
+Card_Expertise
+Card_Heel Hook
+Card_Feel No Pain
+Card_Wireheading
+Card_Blind
+Card_Evolve
+Card_Tempest
+Card_Amplify
+Card_Corruption
+Card_Malaise
+Card_Sentinel
+Card_Void
+Card_Reinforced Body
+Card_Establishment
+Card_Whirlwind
+Card_Accuracy
+Card_Dazed
+Card_Transmutation
+Card_Flash of Steel
+Card_Hologram
+Card_ClearTheMind
+Card_Survivor
+Card_Dark Embrace
+Card_Strike_G
+Card_Weave
+Card_LessonLearned
+Card_Seeing Red
+Card_Magnetism
+Card_FlyingSleeves
+Card_Poisoned Stab
+Card_PiercingWail
+Card_Reboot
+Card_Electrodynamics
+Enemy_SnakePlant
+Card_Glass Knife
+Intent_DEFEND_DEBUFF
+Card_Trip
+Card_Rupture
+Card_Madness
+Card_Dualcast
+Card_After Image
+Card_Bloodletting
+Card_Pride
+Card_Second Wind
+Enemy_SphericGuardian
+Card_LiveForever
+Card_Inflame
+Card_Defend_R
+Card_HandOfGreed
+Card_Immolate
+Card_Parasite
+Enemy_SpikeSlime_M
+Card_Writhe
+Card_Dodge and Roll
+Card_SpiritShield
+Card_Consume
+Card_Flame Barrier
+Card_Conserve Battery
+Card_RitualDagger
+Card_Setup
+Card_Machine Learning
+Card_Perseverance
+Card_DeusExMachina
+Card_Sword Boomerang
+Card_Footwork
+Card_Bane
+Card_ThirdEye
+Card_Reckless Charge
+Card_Blur
+Card_Zap
+Card_PanicButton
+Card_Master of Strategy
+Card_Adrenaline
+Card_Vigilance
+Card_Static Discharge
+Card_PathToVictory
+Card_Adaptation
+Card_Discovery
+Card_Fiend Fire
+Card_Compile Driver
+Card_Slimed
+Card_FlurryOfBlows
+Card_Sadistic Nature
+Card_J.A.X.
+Card_Backstab
+Card_Gash
+Card_Strike_R
+Card_Leg Sweep
+Card_Heatsinks
+Card_ReachHeaven
+Card_Double Energy
+Card_Distraction
+Card_CarveReality
+Card_Omega
+Card_MasterReality
+Card_Anger
+Card_Evaluate
+Card_EmptyMind
+Card_Wound
+Card_Caltrops
+Card_Apotheosis
