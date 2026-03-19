@@ -10,7 +10,7 @@ from __future__ import annotations
 ║     Crops every bounding box into class-named folders for the    ║
 ║     EfficientNet classifier (unchanged from the original).       ║
 ║                                                                  ║
-║  2. STAGE 1 DATASET  (no image copies — zero extra disk space)   ║
+║  2. STAGE 1 DATASET  (no image copies - zero extra disk space)   ║
 ║     Builds the train/val split, remaps specific class ids to     ║
 ║     8 generic ones, and hard-links the original screenshots      ║
 ║     into stage1_dataset/images/{train,val}/.  Hard-links share   ║
@@ -19,30 +19,15 @@ from __future__ import annotations
 ║     falls back to a regular copy automatically.                  ║
 ║     Remapped label .txt files and data.yaml are written here.    ║
 ╠══════════════════════════════════════════════════════════════════╣
-║  DIRECTORY LAYOUT                                                ║
-║                                                                  ║
-║  INPUT (produced by the Java mod)                                ║
-║  ├── gen_screen_images/      synthetic_0.png …                   ║
-║  ├── gen_screen_labels/      synthetic_0.txt …                   ║
-║  └── gen_screen_classes.txt  one specific class name per line    ║
-║                                                                  ║
-║  OUTPUT (created automatically)                                  ║
-║  ├── cropped_dataset/                ← Stage 2 crops             ║
-║  │   ├── Card_Strike_R/                                          ║
-║  │   ├── Enemy_JawWorm/                                          ║
-║  │   └── …                                                       ║
-║  └── stage1_dataset/                 ← Stage 1 training data     ║
-║      ├── images/                                                 ║
-║      │   ├── train/  ← hard-links to original PNGs              ║
-║      │   └── val/                                                ║
-║      ├── labels/                                                 ║
-║      │   ├── train/  ← remapped YOLO .txt files                  ║
-║      │   └── val/                                                ║
-║      ├── data.yaml   ← ready to pass to YOLO.train()             ║
-║      └── classes.txt ← generic class list (index = class id)     ║
+║  CLI ARGUMENTS (all optional - defaults match original CONFIG)   ║
+║    --val-split FLOAT   fraction held out for validation (0.15)   ║
+║    --padding   INT     extra pixels around each crop (8)         ║
+║    --workers   INT     parallel crop workers (cpu_count)         ║
+║    --rebuild           delete & fully rebuild stage1_dataset     ║
 ╚══════════════════════════════════════════════════════════════════╝
 """
 
+import argparse
 import os
 import sys
 import time
@@ -55,52 +40,27 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 try:
     from PIL import Image
 except ImportError:
-    sys.exit("❌  Pillow is not installed.  Run:  pip install Pillow")
+    sys.exit("Pillow is not installed.  Run:  pip install Pillow")
 
 
-# ══════════════════════════════ CONFIG ══════════════════════════════ #
+# ══════════════════════════════ FIXED CONFIG ═════════════════════════ #
+# Values that are never exposed as CLI args (stable across every run).
 
-# Root of the output folder produced by the Java mod.
-# Change only this one path — everything else resolves automatically.
 BASE_DIR = Path.cwd() / "output"
 
-IMAGES_DIR   = BASE_DIR / "gen_screen_images"       # .png screenshots
-LABELS_DIR   = BASE_DIR / "gen_screen_labels"       # .txt YOLO labels
-CLASSES_FILE = BASE_DIR / "gen_screen_classes.txt"  # one specific class per line
+IMAGES_DIR   = BASE_DIR / "gen_screen_images"
+LABELS_DIR   = BASE_DIR / "gen_screen_labels"
+CLASSES_FILE = BASE_DIR / "gen_screen_classes.txt"
 
-# ── Stage 2 crop settings ────────────────────────────────────────
-CROPS_DIR    = BASE_DIR / "cropped_dataset"         # crops land here
+CROPS_DIR  = BASE_DIR / "cropped_dataset"
+STAGE1_DIR = BASE_DIR / "stage1_dataset"
 
-# Extra pixels to add around every crop (8-16 = small breathing room).
-# Use 20+ for Card crops to capture the card art frame.
-PADDING_PX   = 8
-
-# Discard any crop smaller than this in either dimension.
 MIN_CROP_SIZE = 16
+RESIZE_TO     = None      # None = keep native size
+SAVE_FORMAT   = "PNG"
+JPEG_QUALITY  = 95
+RANDOM_SEED   = 42
 
-# How many parallel workers.  None → os.cpu_count() (all cores).
-WORKERS = None
-
-# Resize every crop to a fixed square.  None = keep native size.
-# EfficientNet works fine with variable sizes if left as None.
-RESIZE_TO    = None    # e.g. 128 for EfficientNet input
-
-# Image format for saved crops.  PNG = lossless, JPEG = smaller.
-SAVE_FORMAT  = "PNG"
-JPEG_QUALITY = 95
-
-# ── Stage 1 dataset settings ─────────────────────────────────────
-STAGE1_DIR   = BASE_DIR / "stage1_dataset"
-
-# Fraction of screenshots held out for validation.
-VAL_SPLIT    = 0.15
-RANDOM_SEED  = 42
-
-# Set to True to delete and fully rebuild stage1_dataset on every run.
-# False = skip if data.yaml already exists (safe default).
-REBUILD_STAGE1 = False
-
-# The 8 generic detector classes.  Order = numeric class id in data.yaml.
 GENERIC_CLASSES = [
     "Card",       # 0
     "Enemy",      # 1
@@ -112,11 +72,10 @@ GENERIC_CLASSES = [
     "Relic",      # 7
 ]
 
-# Maps specific-class prefix → generic class name.  First match wins.
 PREFIX_MAP = {
     "Card_":       "Card",
     "Enemy_":      "Enemy",
-    "HealthBar_":  "HealthBar",   # catches HealthBar_Player AND HealthBar_Enemy
+    "HealthBar_":  "HealthBar",
     "Intent_":     "Intent",
     "Player_":     "Player",
     "Potion_":     "Potion",
@@ -124,33 +83,51 @@ PREFIX_MAP = {
     "Relic_":      "Relic",
 }
 
-# ═════════════════════════════ END CONFIG ═══════════════════════════ #
+# ═══════════════════════════════ END FIXED ═══════════════════════════ #
 
 _GENERIC_ID = {name: idx for idx, name in enumerate(GENERIC_CLASSES)}
+
+
+# ─────────────────────────── CLI parsing ────────────────────────────── #
+
+def _parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser(
+        description="STS YOLO Crop Extractor + Stage 1 Dataset Builder",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    ap.add_argument(
+        "--val-split", type=float, default=0.15, metavar="FLOAT",
+        help="Fraction of screenshots held out for validation",
+    )
+    ap.add_argument(
+        "--padding", type=int, default=8, metavar="INT",
+        help="Extra pixels added around every bounding-box crop",
+    )
+    ap.add_argument(
+        "--workers", type=int, default=None, metavar="INT",
+        help="Parallel crop worker processes (default: os.cpu_count())",
+    )
+    ap.add_argument(
+        "--rebuild", action="store_true",
+        help="Delete and fully rebuild stage1_dataset even if data.yaml exists",
+    )
+    return ap.parse_args()
 
 
 # ──────────────────────────── helpers ───────────────────────────── #
 
 def _ensure_dirs() -> None:
-    """
-    Create every directory this script writes to.
-    Input directories (gen_screen_images, gen_screen_labels) are NOT
-    created here — missing inputs are caught later with a clear error.
-    """
     Path("logs").mkdir(parents=True, exist_ok=True)
     BASE_DIR.mkdir(parents=True, exist_ok=True)
     CROPS_DIR.mkdir(parents=True, exist_ok=True)
-    # stage1_dataset sub-dirs are created inside build_stage1_dataset(),
-    # but pre-creating the root avoids races on network file-systems.
     STAGE1_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def load_classes(classes_file: Path) -> dict[int, str]:
-    """Return {class_id: specific_class_name} from classes.txt."""
-    mapping: dict[int, str] = {}
+def load_classes(classes_file: Path) -> dict:
+    mapping: dict = {}
     if not classes_file.exists():
-        print(f"⚠  classes file not found: {classes_file}")
-        print("   Class IDs will be used as folder names (0, 1, 2 …).")
+        print(f"Warning: Could not find {classes_file}.")
+        print("   Class IDs will be used as folder names (0, 1, 2 ...).")
         return mapping
     for idx, line in enumerate(classes_file.read_text(encoding="utf-8").splitlines()):
         name = line.strip()
@@ -160,8 +137,7 @@ def load_classes(classes_file: Path) -> dict[int, str]:
     return mapping
 
 
-def resolve_generic(specific_name: str) -> str | None:
-    """Map a specific class name to its generic parent, or None if unknown."""
+def resolve_generic(specific_name: str):
     for prefix, generic in PREFIX_MAP.items():
         if specific_name.startswith(prefix):
             return generic
@@ -172,9 +148,7 @@ def resolve_generic(specific_name: str) -> str | None:
     return None
 
 
-def yolo_to_pixels(cx: float, cy: float, w: float, h: float,
-                   img_w: int, img_h: int, padding: int = 0):
-    """Convert YOLO normalised coords → pixel (x1, y1, x2, y2), clamped."""
+def yolo_to_pixels(cx, cy, w, h, img_w, img_h, padding=0):
     px_cx = cx * img_w
     px_cy = cy * img_h
     px_w  = w  * img_w
@@ -187,11 +161,6 @@ def yolo_to_pixels(cx: float, cy: float, w: float, h: float,
 
 
 def link_or_copy(src: Path, dst: Path) -> bool:
-    """
-    Hard-link src → dst (zero extra disk space).
-    Falls back to copy if the two paths are on different drives.
-    Returns True if a hard-link was created, False if a copy was made.
-    """
     try:
         os.link(src, dst)
         return True
@@ -204,7 +173,7 @@ def link_or_copy(src: Path, dst: Path) -> bool:
 
 def process_image(args):
     """
-    Worker function — crops all bounding boxes from one screenshot.
+    Worker function - crops all bounding boxes from one screenshot.
     Plain strings only (picklable on Windows 'spawn' method).
     Returns (stem, n_saved, n_skipped, errors).
     """
@@ -274,33 +243,38 @@ def process_image(args):
     return stem, saved, skipped, errors
 
 
-# ─────────────────── Stage 1: dataset builder ───────────────────── #
+# ─────────────────────── Stage 1: dataset builder ───────────────────── #
 
-def build_stage1_dataset(pairs: list[tuple[Path, Path]],
-                         specific_classes: dict[int, str]) -> None:
+def build_stage1_dataset(
+    pairs,
+    specific_classes: dict,
+    val_split: float,
+    rebuild: bool,
+) -> None:
     """
     Build the Stage 1 YOLO-detection dataset in STAGE1_DIR.
 
-    - Splits pairs into train / val (deterministic, RANDOM_SEED).
-    - Hard-links (or copies) each screenshot — zero extra disk space
-      when source and destination are on the same drive.
-    - Writes remapped label files (specific id → generic id).
-    - Writes data.yaml and classes.txt.
+    Parameters
+    ----------
+    pairs           : list of (img_path, lbl_path) tuples
+    specific_classes: {class_id: class_name} dict
+    val_split       : fraction of images used for validation
+    rebuild         : if True, delete and fully rebuild STAGE1_DIR
     """
     yaml_path = STAGE1_DIR / "data.yaml"
 
-    if yaml_path.exists() and not REBUILD_STAGE1:
+    if yaml_path.exists() and not rebuild:
         print(f"  Stage 1 dataset already exists at {STAGE1_DIR}")
-        print("  Set REBUILD_STAGE1 = True to force a full rebuild.\n")
+        print("  Pass --rebuild to force a full rebuild.\n")
         return
 
-    if REBUILD_STAGE1 and STAGE1_DIR.exists():
+    if rebuild and STAGE1_DIR.exists():
         shutil.rmtree(STAGE1_DIR)
-        print("  Removed existing stage1_dataset (REBUILD_STAGE1 = True).")
+        print("  Removed existing stage1_dataset (--rebuild set).")
 
-    # ── Build specific-id → generic-id remap ──────────────────────
-    id_remap: dict[int, int] = {}
-    unmapped: list[str]       = []
+    # ── specific-id -> generic-id remap ───────────────────────────────
+    id_remap: dict = {}
+    unmapped = []
     for spec_id, spec_name in specific_classes.items():
         generic = resolve_generic(spec_name)
         if generic is not None:
@@ -311,17 +285,17 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
     print(f"  Specific classes : {len(specific_classes)}")
     print(f"  Generic classes  : {len(GENERIC_CLASSES)}")
     if unmapped:
-        print(f"  ⚠  Unmapped (will be dropped from labels): {unmapped}")
+        print(f"  Unmapped (will be dropped from labels): {unmapped}")
 
-    # ── Train / val split ──────────────────────────────────────────
+    # ── train / val split ─────────────────────────────────────────────
     rng = random.Random(RANDOM_SEED)
     shuffled = list(pairs)
     rng.shuffle(shuffled)
-    n_val       = max(1, int(len(shuffled) * VAL_SPLIT))
+    n_val       = max(1, int(len(shuffled) * val_split))
     split_pairs = {"val": shuffled[:n_val], "train": shuffled[n_val:]}
     print(f"  Train: {len(split_pairs['train'])}  |  Val: {len(split_pairs['val'])}")
 
-    # ── Write files ────────────────────────────────────────────────
+    # ── write files ───────────────────────────────────────────────────
     hardlinks = copies = 0
 
     for split, split_list in split_pairs.items():
@@ -331,7 +305,6 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
         lbl_out.mkdir(parents=True, exist_ok=True)
 
         for img_path, lbl_path in split_list:
-            # Hard-link (or copy) the screenshot
             dst_img = img_out / img_path.name
             if not dst_img.exists():
                 used_link = link_or_copy(img_path, dst_img)
@@ -340,8 +313,7 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
                 else:
                     copies += 1
 
-            # Remap and write the label file
-            remapped: list[str] = []
+            remapped = []
             for line in lbl_path.read_text(encoding="utf-8").splitlines():
                 parts = line.strip().split()
                 if len(parts) != 5:
@@ -353,7 +325,7 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
 
             (lbl_out / lbl_path.name).write_text("\n".join(remapped), encoding="utf-8")
 
-    # ── data.yaml ─────────────────────────────────────────────────
+    # ── data.yaml ─────────────────────────────────────────────────────
     yaml_content = (
         f"path: {STAGE1_DIR.resolve().as_posix()}\n"
         f"train: images/train\n"
@@ -364,10 +336,9 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
     )
     yaml_path.write_text(yaml_content, encoding="utf-8")
 
-    # ── classes.txt (human-readable reference) ────────────────────
     (STAGE1_DIR / "classes.txt").write_text(
         "\n".join(f"{i}  {name}" for i, name in enumerate(GENERIC_CLASSES)),
-        encoding="utf-8"
+        encoding="utf-8",
     )
 
     mode_str = (
@@ -376,12 +347,13 @@ def build_stage1_dataset(pairs: list[tuple[Path, Path]],
         f"{hardlinks} hard-linked (zero extra disk space)"
     )
     print(f"  Images : {mode_str}")
-    print(f"  data.yaml → {yaml_path}\n")
+    print(f"  data.yaml -> {yaml_path}\n")
 
 
 # ──────────────────────────────── main ──────────────────────────── #
 
 def main():
+    args = _parse_args()
     _ensure_dirs()
 
     print("=" * 65)
@@ -392,27 +364,27 @@ def main():
     print(f"  Classes file : {CLASSES_FILE}")
     print(f"  Crops output : {CROPS_DIR}")
     print(f"  Stage1 output: {STAGE1_DIR}")
-    print(f"  Padding      : {PADDING_PX} px")
+    print(f"  Padding      : {args.padding} px")
     print(f"  Min crop     : {MIN_CROP_SIZE} px")
     print(f"  Resize to    : {RESIZE_TO or 'native (no resize)'}")
     print(f"  Format       : {SAVE_FORMAT}")
-    print(f"  Workers      : {WORKERS or os.cpu_count()}")
+    print(f"  Val split    : {args.val_split}")
+    print(f"  Workers      : {args.workers or os.cpu_count()}")
+    print(f"  Rebuild      : {args.rebuild}")
     print("=" * 65)
 
     for directory in (IMAGES_DIR, LABELS_DIR):
         if not directory.exists():
-            sys.exit(f"❌  Directory not found: {directory}")
+            sys.exit(f"Directory not found: {directory}")
 
-    # ── Load specific class names ──────────────────────────────────
     specific_classes = load_classes(CLASSES_FILE)
     print(f"  Loaded {len(specific_classes)} specific class names.\n")
 
-    # ── Pair images with label files ───────────────────────────────
     image_files = sorted(IMAGES_DIR.glob("*.png"))
     if not image_files:
-        sys.exit(f"❌  No .png files found in {IMAGES_DIR}")
+        sys.exit(f"No .png files found in {IMAGES_DIR}")
 
-    pairs: list[tuple[Path, Path]] = []
+    pairs = []
     missing_labels = 0
     for img_path in image_files:
         lbl_path = LABELS_DIR / img_path.with_suffix(".txt").name
@@ -421,33 +393,38 @@ def main():
         else:
             missing_labels += 1
 
-    print(f"  Found {len(image_files)} images → {len(pairs)} paired with labels.")
+    print(f"  Found {len(image_files)} images - {len(pairs)} paired with labels.")
     if missing_labels:
-        print(f"  ⚠  {missing_labels} images skipped (no matching .txt label).")
+        print(f"  {missing_labels} images skipped (no matching .txt label).")
     if not pairs:
-        sys.exit("❌  Nothing to process.")
+        sys.exit("Nothing to process.")
 
     # ── Stage 1: build detector dataset ───────────────────────────
-    print("\n─── Stage 1 dataset ───────────────────────────────────────")
-    build_stage1_dataset(pairs, specific_classes)
+    print("\n--- Stage 1 dataset -------------------------------------------")
+    build_stage1_dataset(
+        pairs,
+        specific_classes,
+        val_split=args.val_split,
+        rebuild=args.rebuild,
+    )
 
     # ── Stage 2: crop bounding boxes ──────────────────────────────
-    print("─── Stage 2 crops ─────────────────────────────────────────")
+    print("--- Stage 2 crops ---------------------------------------------")
     CROPS_DIR.mkdir(parents=True, exist_ok=True)
 
     tasks = [
         (str(img), str(lbl), str(CROPS_DIR),
-         specific_classes, PADDING_PX, MIN_CROP_SIZE,
+         specific_classes, args.padding, MIN_CROP_SIZE,
          RESIZE_TO, SAVE_FORMAT, JPEG_QUALITY)
         for img, lbl in pairs
     ]
 
     total_saved = total_skipped = done = 0
-    all_errors: list[str] = []
+    all_errors = []
     t0 = time.time()
-    print("\n  Cropping …\n")
+    print("\n  Cropping ...\n")
 
-    n_workers = WORKERS or os.cpu_count()
+    n_workers = args.workers or os.cpu_count()
     with ProcessPoolExecutor(max_workers=n_workers) as pool:
         futures = {pool.submit(process_image, t): t[0] for t in tasks}
         for future in as_completed(futures):
@@ -465,13 +442,13 @@ def main():
                     f"  [{done:>5}/{len(tasks)}]  "
                     f"{total_saved} crops saved  |  "
                     f"{elapsed:.1f}s elapsed  |  ETA {eta:.0f}s",
-                    end="\r"
+                    end="\r",
                 )
 
     elapsed = time.time() - t0
     print("\n")
     print("=" * 65)
-    print(f"  ✅  DONE  in {elapsed:.1f}s")
+    print(f"  DONE  in {elapsed:.1f}s")
     print(f"  Crops saved    : {total_saved}")
     print(f"  Crops skipped  : {total_skipped}  (too small or bad box)")
     print(f"  Errors         : {len(all_errors)}")
@@ -487,14 +464,13 @@ def main():
     if class_counts:
         col_w = max(len(k) for k in class_counts)
         for name, count in sorted(class_counts.items(), key=lambda x: -x[1]):
-            bar = "█" * min(count // max(1, max(class_counts.values()) // 40), 40)
+            bar = "=" * min(count // max(1, max(class_counts.values()) // 40), 40)
             print(f"    {name:<{col_w}}  {count:>5}  {bar}")
 
-    # ── Error log ──────────────────────────────────────────────────
     if all_errors:
         log_path = CROPS_DIR / "_crop_errors.txt"
         log_path.write_text("\n".join(all_errors), encoding="utf-8")
-        print(f"\n  ⚠  {len(all_errors)} errors logged → {log_path}")
+        print(f"\n  {len(all_errors)} errors logged -> {log_path}")
 
     print()
 

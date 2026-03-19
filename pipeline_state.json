@@ -1,0 +1,14 @@
+{
+  "crop": {
+    "status": "skipped",
+    "timestamp": "2026-03-19 17:09:57",
+    "elapsed_s": 0.0,
+    "returncode": 0
+  },
+  "detect": {
+    "status": "failed",
+    "timestamp": "2026-03-19 17:10:00",
+    "elapsed_s": 3.2,
+    "returncode": 1
+  }
+}

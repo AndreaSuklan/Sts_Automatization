@@ -54,6 +54,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -224,7 +225,31 @@ def _run_stage(
       terminal AND appended to PIPELINE_LOG simultaneously.
     * Returns (returncode, elapsed_seconds).
     * Compatible with Python 3.9 on both Windows and Linux.
+
+    Unicode note
+    ------------
+    On Windows the default console codec is cp1252, which cannot encode
+    characters such as the → arrow used in Yolo_Crop.py.  We solve this
+    by injecting PYTHONUTF8=1 and PYTHONIOENCODING=utf-8:utf-8 into the
+    child process environment.  This is equivalent to running each script
+    with  python -X utf8 ...  but without modifying the scripts themselves.
+    The parent process stdout is also reconfigured to UTF-8 so the streamed
+    lines print correctly in terminals that support it (e.g. Windows Terminal,
+    VS Code, most Linux/macOS shells).
     """
+    # ── Reconfigure *this* process's stdout to UTF-8 (once, safe to repeat) ──
+    # Works on Python 3.7+; on Python 3.9 reconfigure() is always available.
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
+        except Exception:
+            pass  # already utf-8 or not reconfigurable (e.g. redirected)
+
+    # ── Build child environment with UTF-8 forced ─────────────────────────────
+    child_env = os.environ.copy()
+    child_env["PYTHONUTF8"]        = "1"          # PEP 540 — Python 3.7+
+    child_env["PYTHONIOENCODING"]  = "utf-8:replace"  # fallback for older code
+
     cmd: List[str] = [sys.executable, str(SCRIPTS[stage])]
     if extra_args:
         cmd.extend(extra_args)
@@ -249,6 +274,7 @@ def _run_stage(
         errors="replace",
         bufsize=1,              # line-buffered (meaningful for text=True)
         cwd=str(ROOT_DIR),
+        env=child_env,          # UTF-8 forced for all child scripts
     )
 
     assert proc.stdout is not None  # guaranteed by stdout=PIPE
@@ -304,49 +330,175 @@ def _print_summary(rows: List[Dict], total_elapsed: float) -> None:
 
 def _parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(
-        description=(
-            "Unified STS CV pipeline: "
-            "Crop → Detect → Classify → Eval"
-        ),
+        description="Unified STS CV pipeline: Crop -> Detect -> Classify -> Eval",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
 
-    # ── Force flags ───────────────────────────────────────────────────────────
-    ap.add_argument(
+    # ── Orchestration: force / skip flags ────────────────────────────────────
+    orch = ap.add_argument_group("orchestration")
+    orch.add_argument(
         "--force-crop", action="store_true",
         help="Re-run Stage 0 even if cropped_dataset/ already exists",
     )
-    ap.add_argument(
+    orch.add_argument(
         "--force-detect", action="store_true",
         help="Re-run Stage 1 even if detector best.pt already exists",
     )
-    ap.add_argument(
+    orch.add_argument(
         "--force-classify", action="store_true",
         help="Re-run Stage 2 even if classifier best.pt already exists",
     )
-
-    # ── Control flags ─────────────────────────────────────────────────────────
-    ap.add_argument(
+    orch.add_argument(
         "--skip-eval", action="store_true",
         help="Skip Stage 3 (evaluation) entirely",
     )
 
-    # ── Eval pass-through arguments ───────────────────────────────────────────
-    ap.add_argument(
-        "--device", type=str, default=None,
-        help="Device forwarded to Eval_ComputerVision.py (e.g. cpu, 0, 0,1)",
+    # ── Stage 0 — Yolo_Crop.py ───────────────────────────────────────────────
+    crop = ap.add_argument_group(
+        "Stage 0 — Yolo_Crop.py",
+        "Forwarded verbatim to Yolo_Crop.py",
     )
-    ap.add_argument(
-        "--topn", type=int, default=None,
-        help="--topn forwarded to Eval_ComputerVision.py (default in script: 30)",
+    crop.add_argument(
+        "--crop-val-split", type=float, default=None, metavar="FLOAT",
+        help="Validation fraction  (default in script: 0.15)",
     )
-    ap.add_argument(
-        "--n-samples", type=int, default=None, dest="n_samples",
-        help="--n-samples forwarded to Eval_ComputerVision.py (default: 16)",
+    crop.add_argument(
+        "--crop-padding", type=int, default=None, metavar="INT",
+        help="Extra pixels around each crop  (default in script: 8)",
+    )
+    crop.add_argument(
+        "--crop-workers", type=int, default=None, metavar="INT",
+        help="Parallel crop workers  (default in script: os.cpu_count())",
+    )
+    crop.add_argument(
+        "--crop-rebuild", action="store_true",
+        help="Force full rebuild of stage1_dataset  (maps to --rebuild)",
+    )
+
+    # ── Stage 1 — Object_Detection.py ────────────────────────────────────────
+    det = ap.add_argument_group(
+        "Stage 1 — Object_Detection.py",
+        "Forwarded verbatim to Object_Detection.py",
+    )
+    det.add_argument(
+        "--det-epochs", type=int, default=None, metavar="INT",
+        help="Training epochs  (default in script: 100)",
+    )
+    det.add_argument(
+        "--det-batch", type=int, default=None, metavar="INT",
+        help="Batch size  (default in script: 64)",
+    )
+    det.add_argument(
+        "--det-device", type=str, default=None, metavar="STR",
+        help="Device(s): 'cpu', '0', or '0,1'  (default in script: 0,1)",
+    )
+    det.add_argument(
+        "--det-imgsz", type=int, default=None, metavar="INT",
+        help="Input image size  (default in script: 640)",
+    )
+
+    # ── Stage 2 — Object_Classifier.py ───────────────────────────────────────
+    cls = ap.add_argument_group(
+        "Stage 2 — Object_Classifier.py",
+        "Forwarded verbatim to Object_Classifier.py",
+    )
+    cls.add_argument(
+        "--cls-epochs", type=int, default=None, metavar="INT",
+        help="Training epochs  (default in script: 100)",
+    )
+    cls.add_argument(
+        "--cls-batch", type=int, default=None, metavar="INT",
+        help="Batch size per GPU  (default in script: 64)",
+    )
+    cls.add_argument(
+        "--cls-gpu-ids", type=str, default=None, metavar="STR",
+        help="GPU ids: 'cpu', '0', or '0,1'  (default in script: 0,1)",
+    )
+    cls.add_argument(
+        "--cls-lr", type=float, default=None, metavar="FLOAT",
+        help="Initial learning rate (Adam)  (default in script: 0.001)",
+    )
+    cls.add_argument(
+        "--cls-imgsz", type=int, default=None, metavar="INT",
+        help="Crop resize dimension  (default in script: 128)",
+    )
+
+    # ── Stage 3 — Eval_ComputerVision.py ─────────────────────────────────────
+    evl = ap.add_argument_group(
+        "Stage 3 — Eval_ComputerVision.py",
+        "Forwarded verbatim to Eval_ComputerVision.py",
+    )
+    evl.add_argument(
+        "--eval-device", type=str, default=None, metavar="STR",
+        help="Device for eval  (default in script: cpu)",
+    )
+    evl.add_argument(
+        "--topn", type=int, default=None, metavar="INT",
+        help="Max classes in classification plots  (default in script: 30)",
+    )
+    evl.add_argument(
+        "--n-samples", type=int, default=None, dest="n_samples", metavar="INT",
+        help="Detection sample mosaic count  (default in script: 16)",
     )
 
     return ap.parse_args()
+
+
+def _build_crop_args(args: argparse.Namespace) -> Optional[List[str]]:
+    """Translate pipeline args into the argv list for Yolo_Crop.py."""
+    extra: List[str] = []
+    if args.crop_val_split is not None:
+        extra += ["--val-split", str(args.crop_val_split)]
+    if args.crop_padding is not None:
+        extra += ["--padding", str(args.crop_padding)]
+    if args.crop_workers is not None:
+        extra += ["--workers", str(args.crop_workers)]
+    if args.crop_rebuild:
+        extra += ["--rebuild"]
+    return extra if extra else None
+
+
+def _build_det_args(args: argparse.Namespace) -> Optional[List[str]]:
+    """Translate pipeline args into the argv list for Object_Detection.py."""
+    extra: List[str] = []
+    if args.det_epochs is not None:
+        extra += ["--epochs", str(args.det_epochs)]
+    if args.det_batch is not None:
+        extra += ["--batch", str(args.det_batch)]
+    if args.det_device is not None:
+        extra += ["--device", args.det_device]
+    if args.det_imgsz is not None:
+        extra += ["--imgsz", str(args.det_imgsz)]
+    return extra if extra else None
+
+
+def _build_cls_args(args: argparse.Namespace) -> Optional[List[str]]:
+    """Translate pipeline args into the argv list for Object_Classifier.py."""
+    extra: List[str] = []
+    if args.cls_epochs is not None:
+        extra += ["--epochs", str(args.cls_epochs)]
+    if args.cls_batch is not None:
+        extra += ["--batch", str(args.cls_batch)]
+    if args.cls_gpu_ids is not None:
+        extra += ["--gpu-ids", args.cls_gpu_ids]
+    if args.cls_lr is not None:
+        extra += ["--lr", str(args.cls_lr)]
+    if args.cls_imgsz is not None:
+        extra += ["--imgsz", str(args.cls_imgsz)]
+    return extra if extra else None
+
+
+def _build_eval_args(args: argparse.Namespace) -> Optional[List[str]]:
+    """Translate pipeline args into the argv list for Eval_ComputerVision.py."""
+    extra: List[str] = []
+    if args.eval_device is not None:
+        extra += ["--device", args.eval_device]
+    if args.topn is not None:
+        extra += ["--topn", str(args.topn)]
+    if args.n_samples is not None:
+        extra += ["--n-samples", str(args.n_samples)]
+    return extra if extra else None
 
 
 def main() -> None:
@@ -358,7 +510,7 @@ def main() -> None:
 
     # ── Banner ────────────────────────────────────────────────────────────────
     _log(_sep())
-    _log("  STS CV PIPELINE — UNIFIED RUNNER")
+    _log("  STS CV PIPELINE - UNIFIED RUNNER")
     _log(_sep())
     _log(f"  Python        : {sys.version.split()[0]}")
     _log(f"  Root dir      : {ROOT_DIR}")
@@ -378,27 +530,20 @@ def main() -> None:
     ]
     if missing:
         for m in missing:
-            _log(f"❌  Script not found: {m}")
-        _log("  Aborting — fix missing scripts and re-submit.")
+            _log(f"  Script not found: {m}")
+        _log("  Aborting - fix missing scripts and re-submit.")
         sys.exit(1)
 
     # ── Build ordered stage list ──────────────────────────────────────────────
     # Each tuple: (stage_key, force_bool, extra_cli_args_or_None)
     stages: List[Tuple[str, bool, Optional[List[str]]]] = [
-        ("crop",     args.force_crop,     None),
-        ("detect",   args.force_detect,   None),
-        ("classify", args.force_classify, None),
+        ("crop",     args.force_crop,     _build_crop_args(args)),
+        ("detect",   args.force_detect,   _build_det_args(args)),
+        ("classify", args.force_classify, _build_cls_args(args)),
     ]
 
     if not args.skip_eval:
-        eval_extra: List[str] = []
-        if args.device   is not None:
-            eval_extra += ["--device",    args.device]
-        if args.topn     is not None:
-            eval_extra += ["--topn",      str(args.topn)]
-        if args.n_samples is not None:
-            eval_extra += ["--n-samples", str(args.n_samples)]
-        stages.append(("eval", False, eval_extra if eval_extra else None))
+        stages.append(("eval", False, _build_eval_args(args)))
 
     # ── Execute stages in order ───────────────────────────────────────────────
     summary_rows: List[Dict] = []

@@ -1,0 +1,6 @@
+path: C:/Users/andre/Documents/GitHub/Sts_Automatization/output/stage1_dataset
+train: images/train
+val:   images/val
+
+nc: 8
+names: ['Card', 'Enemy', 'HealthBar', 'Intent', 'Player', 'Potion', 'Power', 'Relic']
