@@ -1,26 +1,26 @@
 {
   "crop": {
     "status": "skipped",
-    "timestamp": "2026-03-19 17:25:00",
+    "timestamp": "2026-03-20 00:14:35",
     "elapsed_s": 0.0,
     "returncode": 0
   },
   "detect": {
     "status": "skipped",
-    "timestamp": "2026-03-19 17:25:00",
+    "timestamp": "2026-03-20 00:14:35",
     "elapsed_s": 0.0,
     "returncode": 0
   },
   "classify": {
-    "status": "success",
-    "timestamp": "2026-03-19 17:25:52",
-    "elapsed_s": 51.9,
+    "status": "skipped",
+    "timestamp": "2026-03-20 00:14:35",
+    "elapsed_s": 0.0,
     "returncode": 0
   },
   "eval": {
     "status": "success",
-    "timestamp": "2026-03-19 17:26:41",
-    "elapsed_s": 49.4,
+    "timestamp": "2026-03-20 00:16:02",
+    "elapsed_s": 86.7,
     "returncode": 0
   }
 }

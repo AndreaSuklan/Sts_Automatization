@@ -8,13 +8,14 @@
 #*.pth
 #*.bin
 #*.yaml
-#/output*
+/output/*
 /logs
 
 # Exception
 !/output/gen_screen_images/
 !/output/gen_screen_labels/
 !/ouput/gen_screen_classes.txt
+!/output/eval
 
 # User-specific files
 *.rsuser

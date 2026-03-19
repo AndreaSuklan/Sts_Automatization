@@ -26,7 +26,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
 #SBATCH --gres=gpu:V100:2
-#SBATCH --time=08:00:00
+#SBATCH --time=02:00:00
 #SBATCH --mem=64G
 #SBATCH --output=logs/pipeline_%j.out
 #SBATCH --error=logs/pipeline_%j.err

@@ -1,0 +1,671 @@
+        ╔══════════════════════════════════════════╗
+        ║   STAGE 2 — CLASSIFIER EVALUATION REPORT ║
+        ╚══════════════════════════════════════════╝
+
+        Overall accuracy : 0.9995  (99.95%)
+        Classes          : 658
+        Val samples      : 11002
+
+        ── Per-class breakdown ──────────────────────
+
+                                   precision    recall  f1-score   support
+
+     Card_A Thousand Cuts       1.00      1.00      1.00         7
+            Card_Accuracy       1.00      1.00      1.00         3
+          Card_Acrobatics       1.00      1.00      1.00         2
+          Card_Adaptation       1.00      1.00      1.00         2
+          Card_Adrenaline       1.00      1.00      1.00         5
+         Card_After Image       1.00      1.00      1.00         2
+           Card_Aggregate       1.00      1.00      1.00         2
+         Card_All For One       1.00      1.00      1.00         4
+      Card_All Out Attack       1.00      1.00      1.00         2
+               Card_Alpha       1.00      1.00      1.00         3
+             Card_Amplify       1.00      1.00      1.00         5
+               Card_Anger       1.00      1.00      1.00         2
+          Card_Apotheosis       1.00      1.00      1.00         4
+           Card_Armaments       1.00      1.00      1.00         4
+       Card_AscendersBane       1.00      1.00      1.00         5
+        Card_Auto Shields       1.00      1.00      1.00         6
+            Card_Backflip       1.00      1.00      1.00         3
+            Card_Backstab       1.00      1.00      1.00         5
+      Card_Ball Lightning       1.00      1.00      1.00         8
+          Card_Bandage Up       1.00      1.00      1.00         3
+                Card_Bane       1.00      1.00      1.00         7
+             Card_Barrage       1.00      1.00      1.00         3
+           Card_Barricade       1.00      1.00      1.00         4
+       Card_Battle Trance       1.00      1.00      1.00         4
+          Card_BattleHymn       1.00      1.00      1.00         1
+           Card_Beam Cell       1.00      1.00      1.00         3
+      Card_BecomeAlmighty       1.00      1.00      1.00         4
+             Card_Berserk       1.00      1.00      1.00         2
+                Card_Beta       1.00      1.00      1.00         6
+    Card_Biased Cognition       1.00      1.00      1.00         3
+                Card_Bite       1.00      1.00      1.00         3
+         Card_Blade Dance       1.00      1.00      1.00         1
+           Card_Blasphemy       1.00      1.00      1.00         2
+               Card_Blind       1.00      1.00      1.00         3
+            Card_Blizzard       1.00      1.00      1.00         8
+     Card_Blood for Blood       1.00      1.00      1.00         3
+        Card_Bloodletting       1.00      1.00      1.00         5
+            Card_Bludgeon       1.00      1.00      1.00         4
+                Card_Blur       1.00      1.00      1.00         7
+           Card_Body Slam       1.00      1.00      1.00         4
+        Card_BootSequence       1.00      1.00      1.00         3
+      Card_Bouncing Flask       1.00      1.00      1.00         5
+         Card_BowlingBash       1.00      1.00      1.00         6
+           Card_Brutality       1.00      1.00      1.00         8
+              Card_Buffer       1.00      1.00      1.00         7
+         Card_Bullet Time       1.00      1.00      1.00         6
+                Card_Burn       1.00      1.00      1.00         6
+        Card_Burning Pact       1.00      1.00      1.00         2
+               Card_Burst       1.00      1.00      1.00         2
+   Card_Calculated Gamble       1.00      1.00      1.00         4
+            Card_Caltrops       1.00      1.00      1.00         7
+           Card_Capacitor       1.00      1.00      1.00         6
+             Card_Carnage       1.00      1.00      1.00         6
+        Card_CarveReality       1.00      1.00      1.00         8
+            Card_Catalyst       1.00      1.00      1.00         5
+               Card_Chaos       1.00      1.00      1.00        10
+               Card_Chill       1.00      1.00      1.00         5
+               Card_Choke       1.00      1.00      1.00         6
+           Card_Chrysalis       1.00      1.00      1.00         4
+               Card_Clash       1.00      1.00      1.00         9
+        Card_ClearTheMind       1.00      1.00      1.00         4
+              Card_Cleave       1.00      1.00      1.00         2
+    Card_Cloak And Dagger       1.00      1.00      1.00         1
+         Card_Clothesline       1.00      1.00      1.00         4
+              Card_Clumsy       1.00      1.00      1.00         6
+           Card_Cold Snap       1.00      1.00      1.00         5
+             Card_Collect       1.00      1.00      1.00         7
+             Card_Combust       1.00      1.00      1.00         6
+      Card_Compile Driver       1.00      1.00      1.00         4
+         Card_Concentrate       1.00      1.00      1.00         7
+            Card_Conclude       1.00      1.00      1.00         3
+        Card_ConjureBlade       1.00      1.00      1.00         4
+          Card_Consecrate       1.00      1.00      1.00         9
+    Card_Conserve Battery       1.00      1.00      1.00         2
+             Card_Consume       1.00      1.00      1.00         3
+          Card_Coolheaded       1.00      1.00      1.00         4
+          Card_Core Surge       1.00      1.00      1.00         2
+    Card_Corpse Explosion       1.00      1.00      1.00         4
+          Card_Corruption       1.00      1.00      1.00         7
+         Card_Creative AI       1.00      1.00      1.00         5
+           Card_Crescendo       1.00      1.00      1.00         2
+    Card_Crippling Poison       1.00      1.00      1.00         2
+         Card_CrushJoints       1.00      1.00      1.00         3
+      Card_CurseOfTheBell       1.00      1.00      1.00         5
+      Card_CutThroughFate       1.00      1.00      1.00         7
+        Card_Dagger Spray       1.00      1.00      1.00         3
+        Card_Dagger Throw       1.00      1.00      1.00         3
+        Card_Dark Embrace       1.00      1.00      1.00         6
+       Card_Dark Shackles       1.00      1.00      1.00         5
+            Card_Darkness       1.00      1.00      1.00         5
+                Card_Dash       1.00      1.00      1.00         7
+               Card_Dazed       1.00      1.00      1.00         3
+       Card_Deadly Poison       1.00      1.00      1.00        11
+               Card_Decay       1.00      1.00      1.00         1
+      Card_DeceiveReality       1.00      1.00      1.00         4
+         Card_Deep Breath       1.00      1.00      1.00         4
+            Card_Defend_B       1.00      1.00      1.00         4
+            Card_Defend_G       1.00      1.00      1.00         8
+            Card_Defend_P       1.00      1.00      1.00         6
+            Card_Defend_R       1.00      1.00      1.00         7
+             Card_Deflect       1.00      1.00      1.00         4
+          Card_Defragment       1.00      1.00      1.00         2
+          Card_Demon Form       1.00      1.00      1.00         4
+       Card_DeusExMachina       1.00      1.00      1.00         8
+            Card_DevaForm       1.00      1.00      1.00         2
+            Card_Devotion       1.00      1.00      1.00         3
+         Card_Die Die Die       1.00      1.00      1.00         7
+              Card_Disarm       1.00      1.00      1.00         3
+           Card_Discovery       1.00      1.00      1.00         4
+         Card_Distraction       1.00      1.00      1.00         6
+      Card_Dodge and Roll       1.00      1.00      1.00         5
+      Card_Doom and Gloom       1.00      1.00      1.00         1
+        Card_Doppelganger       1.00      1.00      1.00         4
+       Card_Double Energy       1.00      1.00      1.00         8
+          Card_Double Tap       1.00      1.00      1.00         2
+               Card_Doubt       1.00      1.00      1.00         3
+   Card_Dramatic Entrance       1.00      1.00      1.00         5
+            Card_Dropkick       1.00      1.00      1.00         3
+          Card_Dual Wield       1.00      1.00      1.00         4
+            Card_Dualcast       1.00      1.00      1.00         5
+           Card_Echo Form       1.00      1.00      1.00         3
+     Card_Electrodynamics       1.00      1.00      1.00         3
+           Card_EmptyBody       1.00      1.00      1.00         5
+           Card_EmptyFist       1.00      1.00      1.00         2
+           Card_EmptyMind       1.00      1.00      1.00         5
+       Card_Endless Agony       1.00      1.00      1.00         2
+       Card_Enlightenment       1.00      1.00      1.00         6
+            Card_Entrench       1.00      1.00      1.00         4
+            Card_Eruption       1.00      1.00      1.00         4
+         Card_Escape Plan       1.00      1.00      1.00         5
+       Card_Establishment       1.00      1.00      1.00         4
+            Card_Evaluate       1.00      1.00      1.00         6
+          Card_Eviscerate       1.00      1.00      1.00         2
+              Card_Evolve       1.00      1.00      1.00         6
+              Card_Exhume       1.00      1.00      1.00         8
+           Card_Expertise       1.00      1.00      1.00         4
+            Card_Expunger       1.00      1.00      1.00         7
+                 Card_FTL       1.00      1.00      1.00         4
+      Card_FameAndFortune       1.00      1.00      1.00         1
+            Card_Fasting2       1.00      1.00      1.00         5
+          Card_FearNoEvil       1.00      1.00      1.00         1
+                Card_Feed       1.00      1.00      1.00         4
+        Card_Feel No Pain       1.00      1.00      1.00         6
+          Card_Fiend Fire       1.00      1.00      1.00         7
+             Card_Finesse       1.00      1.00      1.00         4
+            Card_Finisher       1.00      1.00      1.00         9
+      Card_Fire Breathing       1.00      1.00      1.00         7
+             Card_Fission       1.00      1.00      1.00         3
+       Card_Flame Barrier       1.00      1.00      1.00         2
+      Card_Flash of Steel       1.00      1.00      1.00         5
+          Card_Flechettes       1.00      1.00      1.00         5
+                Card_Flex       1.00      1.00      1.00         3
+       Card_FlurryOfBlows       1.00      1.00      1.00         5
+         Card_Flying Knee       1.00      1.00      1.00         3
+       Card_FlyingSleeves       1.00      1.00      1.00         1
+            Card_FollowUp       1.00      1.00      1.00         4
+            Card_Footwork       1.00      1.00      1.00         5
+         Card_Force Field       1.00      1.00      1.00         3
+    Card_ForeignInfluence       1.00      1.00      1.00         4
+         Card_Forethought       1.00      1.00      1.00         2
+              Card_Fusion       1.00      1.00      1.00         8
+                Card_Gash       1.00      1.00      1.00         4
+   Card_Genetic Algorithm       1.00      1.00      1.00         4
+             Card_Ghostly       1.00      1.00      1.00         5
+       Card_Ghostly Armor       1.00      1.00      1.00         5
+             Card_Glacier       1.00      1.00      1.00         4
+         Card_Glass Knife       1.00      1.00      1.00         5
+     Card_Go for the Eyes       1.00      1.00      1.00         7
+      Card_Good Instincts       1.00      1.00      1.00         5
+        Card_Grand Finale       1.00      1.00      1.00         4
+                Card_Halt       1.00      1.00      1.00         6
+         Card_HandOfGreed       1.00      1.00      1.00         7
+               Card_Havoc       1.00      1.00      1.00         5
+            Card_Headbutt       1.00      1.00      1.00         2
+           Card_Heatsinks       1.00      1.00      1.00         5
+         Card_Heavy Blade       1.00      1.00      1.00         5
+           Card_Heel Hook       1.00      1.00      1.00         3
+         Card_Hello World       1.00      1.00      1.00         5
+         Card_Hemokinesis       1.00      1.00      1.00         7
+            Card_Hologram       1.00      1.00      1.00         2
+           Card_Hyperbeam       1.00      1.00      1.00         7
+            Card_Immolate       1.00      1.00      1.00         5
+          Card_Impatience       1.00      1.00      1.00         2
+          Card_Impervious       1.00      1.00      1.00         5
+         Card_Indignation       1.00      1.00      1.00         8
+      Card_Infernal Blade       1.00      1.00      1.00         4
+     Card_Infinite Blades       1.00      1.00      1.00         7
+             Card_Inflame       1.00      1.00      1.00         3
+              Card_Injury       1.00      1.00      1.00         3
+          Card_InnerPeace       1.00      1.00      1.00         9
+             Card_Insight       1.00      1.00      1.00         3
+          Card_Intimidate       1.00      1.00      1.00         6
+           Card_Iron Wave       1.00      1.00      1.00         4
+              Card_J.A.X.       1.00      1.00      1.00         1
+  Card_Jack Of All Trades       1.00      1.00      1.00         3
+           Card_Judgement       1.00      1.00      1.00         4
+          Card_Juggernaut       1.00      1.00      1.00         3
+           Card_JustLucky       1.00      1.00      1.00         4
+                Card_Leap       1.00      1.00      1.00         1
+           Card_Leg Sweep       1.00      1.00      1.00         3
+       Card_LessonLearned       1.00      1.00      1.00         6
+           Card_LikeWater       1.00      1.00      1.00         2
+         Card_Limit Break       1.00      1.00      1.00         5
+         Card_LiveForever       1.00      1.00      1.00         3
+              Card_Lockon       1.00      1.00      1.00         5
+                Card_Loop       1.00      1.00      1.00         4
+    Card_Machine Learning       1.00      1.00      1.00         5
+             Card_Madness       1.00      1.00      1.00         4
+           Card_Magnetism       1.00      1.00      1.00         7
+             Card_Malaise       1.00      1.00      1.00         6
+  Card_Master of Strategy       1.00      1.00      1.00         3
+       Card_MasterReality       1.00      1.00      1.00         5
+      Card_Masterful Stab       1.00      1.00      1.00         2
+              Card_Mayhem       1.00      1.00      1.00         4
+            Card_Meditate       1.00      1.00      1.00         5
+              Card_Melter       1.00      1.00      1.00         8
+      Card_MentalFortress       1.00      1.00      1.00         4
+         Card_Metallicize       1.00      1.00      1.00         5
+       Card_Metamorphosis       1.00      1.00      1.00         6
+       Card_Meteor Strike       1.00      1.00      1.00         3
+          Card_Mind Blast       1.00      1.00      1.00         1
+             Card_Miracle       1.00      1.00      1.00         6
+          Card_Multi-Cast       1.00      1.00      1.00         9
+      Card_Necronomicurse       1.00      1.00      1.00         5
+          Card_Neutralize       1.00      1.00      1.00         5
+        Card_Night Terror       1.00      1.00      1.00         3
+             Card_Nirvana       1.00      1.00      1.00         4
+           Card_Normality       1.00      1.00      1.00         5
+       Card_Noxious Fumes       1.00      1.00      1.00         3
+            Card_Offering       1.00      1.00      1.00         5
+               Card_Omega       1.00      1.00      1.00         3
+         Card_Omniscience       1.00      1.00      1.00         5
+         Card_Outmaneuver       1.00      1.00      1.00         6
+                Card_Pain       1.00      1.00      1.00         4
+             Card_Panacea       1.00      1.00      1.00         7
+             Card_Panache       1.00      1.00      1.00         6
+         Card_PanicButton       1.00      1.00      1.00         3
+            Card_Parasite       1.00      1.00      1.00         1
+       Card_PathToVictory       1.00      1.00      1.00         3
+    Card_Perfected Strike       1.00      1.00      1.00         6
+        Card_Perseverance       1.00      1.00      1.00         3
+   Card_Phantasmal Killer       1.00      1.00      1.00         4
+        Card_PiercingWail       1.00      1.00      1.00         4
+       Card_Poisoned Stab       1.00      1.00      1.00         6
+       Card_Pommel Strike       1.00      1.00      1.00         3
+       Card_Power Through       1.00      1.00      1.00         6
+                Card_Pray       1.00      1.00      1.00         7
+            Card_Predator       1.00      1.00      1.00         6
+            Card_Prepared       1.00      1.00      1.00         5
+               Card_Pride       1.00      1.00      1.00         2
+           Card_Prostrate       1.00      1.00      1.00         8
+             Card_Protect       1.00      1.00      1.00         8
+              Card_Pummel       1.00      1.00      1.00         5
+              Card_Purity       1.00      1.00      1.00        11
+         Card_Quick Slash       1.00      1.00      1.00         4
+                Card_Rage       1.00      1.00      1.00         2
+            Card_Ragnarok       1.00      1.00      1.00         4
+             Card_Rainbow       1.00      1.00      1.00         5
+             Card_Rampage       1.00      1.00      1.00         6
+         Card_ReachHeaven       1.00      1.00      1.00         4
+              Card_Reaper       1.00      1.00      1.00         3
+              Card_Reboot       1.00      1.00      1.00         3
+             Card_Rebound       1.00      1.00      1.00         5
+     Card_Reckless Charge       1.00      1.00      1.00         3
+             Card_Recycle       1.00      1.00      1.00         3
+                Card_Redo       1.00      1.00      1.00         4
+              Card_Reflex       1.00      1.00      1.00         3
+              Card_Regret       1.00      1.00      1.00         7
+     Card_Reinforced Body       1.00      1.00      1.00         3
+           Card_Reprogram       1.00      1.00      1.00         3
+   Card_Riddle With Holes       1.00      1.00      1.00         3
+        Card_Rip and Tear       1.00      1.00      1.00         2
+        Card_RitualDagger       1.00      1.00      1.00         4
+             Card_Rupture       1.00      1.00      1.00         4
+     Card_Sadistic Nature       1.00      1.00      1.00         6
+              Card_Safety       1.00      1.00      1.00         4
+            Card_Sanctity       1.00      1.00      1.00         7
+         Card_SandsOfTime       1.00      1.00      1.00         1
+            Card_SashWhip       1.00      1.00      1.00         3
+              Card_Scrape       1.00      1.00      1.00         3
+              Card_Scrawl       1.00      1.00      1.00         4
+        Card_Searing Blow       1.00      1.00      1.00         4
+         Card_Second Wind       1.00      1.00      1.00         5
+    Card_Secret Technique       1.00      1.00      1.00         8
+       Card_Secret Weapon       1.00      1.00      1.00         8
+          Card_Seeing Red       1.00      1.00      1.00         2
+                Card_Seek       1.00      1.00      1.00         8
+         Card_Self Repair       1.00      1.00      1.00         6
+            Card_Sentinel       1.00      1.00      1.00         8
+               Card_Setup       1.00      1.00      1.00         5
+          Card_Sever Soul       1.00      1.00      1.00         6
+               Card_Shame       1.00      1.00      1.00         8
+                Card_Shiv       1.00      1.00      1.00         5
+           Card_Shockwave       1.00      1.00      1.00         4
+        Card_Shrug It Off       1.00      1.00      1.00         4
+       Card_SignatureMove       1.00      1.00      1.00         2
+              Card_Skewer       1.00      1.00      1.00         8
+                Card_Skim       1.00      1.00      1.00         4
+               Card_Slice       1.00      1.00      1.00         2
+              Card_Slimed       1.00      1.00      1.00         7
+               Card_Smite       1.00      1.00      1.00         9
+        Card_SpiritShield       1.00      1.00      1.00         5
+       Card_Spot Weakness       1.00      1.00      1.00         6
+               Card_Stack       1.00      1.00      1.00         4
+    Card_Static Discharge       1.00      1.00      1.00         5
+               Card_Steam       1.00      1.00      1.00         6
+         Card_Steam Power       1.00      1.00      1.00         3
+               Card_Storm       1.00      1.00      1.00         3
+      Card_Storm of Steel       1.00      1.00      1.00         6
+          Card_Streamline       1.00      1.00      1.00         6
+            Card_Strike_B       1.00      1.00      1.00         5
+            Card_Strike_G       1.00      1.00      1.00         5
+            Card_Strike_P       1.00      1.00      1.00         3
+            Card_Strike_R       1.00      1.00      1.00         2
+               Card_Study       1.00      1.00      1.00         4
+        Card_Sucker Punch       1.00      1.00      1.00         5
+              Card_Sunder       1.00      1.00      1.00         8
+            Card_Survivor       1.00      1.00      1.00         3
+       Card_Sweeping Beam       1.00      1.00      1.00         7
+        Card_Swift Strike       1.00      1.00      1.00         3
+              Card_Swivel       1.00      1.00      1.00         5
+     Card_Sword Boomerang       1.00      1.00      1.00         4
+           Card_Tactician       1.00      1.00      1.00         4
+       Card_TalkToTheHand       1.00      1.00      1.00         7
+             Card_Tantrum       1.00      1.00      1.00         2
+             Card_Tempest       1.00      1.00      1.00         3
+              Card_Terror       1.00      1.00      1.00         1
+            Card_The Bomb       1.00      1.00      1.00         7
+      Card_Thinking Ahead       1.00      1.00      1.00         3
+            Card_ThirdEye       1.00      1.00      1.00         2
+     Card_ThroughViolence       1.00      1.00      1.00         5
+      Card_Thunder Strike       1.00      1.00      1.00         5
+         Card_Thunderclap       1.00      1.00      1.00         5
+       Card_Transmutation       1.00      1.00      1.00         6
+                Card_Trip       1.00      1.00      1.00         5
+           Card_True Grit       1.00      1.00      1.00         4
+               Card_Turbo       1.00      1.00      1.00        14
+         Card_Twin Strike       1.00      1.00      1.00         5
+  Card_Underhanded Strike       1.00      1.00      1.00         6
+                Card_Undo       1.00      1.00      1.00         2
+              Card_Unload       1.00      1.00      1.00         7
+            Card_Uppercut       1.00      1.00      1.00         1
+               Card_Vault       1.00      1.00      1.00         8
+           Card_Vengeance       1.00      1.00      1.00         4
+          Card_Venomology       1.00      1.00      1.00         5
+           Card_Vigilance       1.00      1.00      1.00         2
+            Card_Violence       1.00      1.00      1.00         3
+                Card_Void       1.00      1.00      1.00         2
+              Card_Wallop       1.00      1.00      1.00         5
+              Card_Warcry       1.00      1.00      1.00         3
+       Card_WaveOfTheHand       1.00      1.00      1.00         5
+               Card_Weave       1.00      1.00      1.00         2
+     Card_Well Laid Plans       1.00      1.00      1.00         4
+           Card_WheelKick       1.00      1.00      1.00         3
+           Card_Whirlwind       1.00      1.00      1.00         4
+         Card_White Noise       1.00      1.00      1.00         4
+         Card_Wild Strike       1.00      1.00      1.00         7
+      Card_WindmillStrike       1.00      1.00      1.00         3
+         Card_Wireheading       1.00      1.00      1.00         8
+                Card_Wish       1.00      1.00      1.00         5
+             Card_Worship       1.00      1.00      1.00         4
+               Card_Wound       1.00      1.00      1.00         2
+      Card_Wraith Form v2       1.00      1.00      1.00         5
+       Card_WreathOfFlame       1.00      1.00      1.00         6
+              Card_Writhe       1.00      1.00      1.00         6
+                 Card_Zap       1.00      1.00      1.00         4
+        Enemy_AcidSlime_L       1.00      1.00      1.00        10
+        Enemy_AcidSlime_M       1.00      1.00      1.00         9
+        Enemy_AcidSlime_S       1.00      1.00      1.00        10
+        Enemy_AwakenedOne       1.00      1.00      1.00         6
+         Enemy_BanditBear       1.00      1.00      1.00        13
+        Enemy_BanditChild       1.00      1.00      1.00         8
+       Enemy_BanditLeader       1.00      1.00      1.00         9
+     Enemy_BookOfStabbing       1.00      1.00      1.00        10
+    Enemy_BronzeAutomaton       1.00      1.00      1.00         9
+               Enemy_Byrd       1.00      1.00      1.00         3
+          Enemy_Centurion       1.00      1.00      1.00         4
+              Enemy_Champ       1.00      1.00      1.00         5
+             Enemy_Chosen       1.00      0.94      0.97        16
+       Enemy_CorruptHeart       1.00      1.00      1.00         4
+            Enemy_Cultist       0.92      1.00      0.96        11
+             Enemy_Dagger       1.00      1.00      1.00         9
+           Enemy_Darkling       1.00      1.00      1.00         9
+               Enemy_Deca       1.00      1.00      1.00        10
+               Enemy_Donu       1.00      1.00      1.00        13
+           Enemy_Exploder       1.00      1.00      1.00        13
+         Enemy_FungiBeast       1.00      1.00      1.00         6
+Enemy_FuzzyLouseDefensive       1.00      1.00      1.00        35
+   Enemy_FuzzyLouseNormal       1.00      1.00      1.00        10
+          Enemy_GiantHead       1.00      1.00      1.00         6
+         Enemy_GremlinFat       1.00      1.00      1.00         7
+      Enemy_GremlinLeader       1.00      1.00      1.00         9
+         Enemy_GremlinNob       1.00      1.00      1.00         6
+       Enemy_GremlinThief       1.00      1.00      1.00        10
+    Enemy_GremlinTsundere       1.00      1.00      1.00         7
+     Enemy_GremlinWarrior       1.00      1.00      1.00         6
+      Enemy_GremlinWizard       1.00      1.00      1.00         6
+             Enemy_Healer       1.00      1.00      1.00         8
+          Enemy_Hexaghost       1.00      1.00      1.00         9
+            Enemy_JawWorm       1.00      1.00      1.00         5
+          Enemy_Lagavulin       1.00      1.00      1.00         6
+             Enemy_Looter       1.00      1.00      1.00         8
+                Enemy_Maw       1.00      1.00      1.00         6
+             Enemy_Mugger       1.00      1.00      1.00         7
+            Enemy_Nemesis       1.00      1.00      1.00         9
+         Enemy_Orb Walker       1.00      1.00      1.00        11
+        Enemy_Reptomancer       1.00      1.00      1.00         9
+           Enemy_Repulsor       1.00      1.00      1.00         6
+             Enemy_Sentry       1.00      1.00      1.00        11
+            Enemy_Serpent       1.00      1.00      1.00        10
+   Enemy_Shelled Parasite       1.00      1.00      1.00        10
+         Enemy_SlaverBlue       1.00      1.00      1.00         5
+         Enemy_SlaverBoss       1.00      1.00      1.00         8
+          Enemy_SlaverRed       1.00      1.00      1.00        11
+          Enemy_SlimeBoss       1.00      1.00      1.00         9
+         Enemy_SnakePlant       1.00      1.00      1.00         3
+             Enemy_Snecko       1.00      1.00      1.00        11
+    Enemy_SphericGuardian       1.00      1.00      1.00         9
+       Enemy_SpikeSlime_M       1.00      1.00      1.00        11
+       Enemy_SpikeSlime_S       1.00      1.00      1.00        11
+             Enemy_Spiker       1.00      1.00      1.00         9
+        Enemy_SpireShield       1.00      1.00      1.00        13
+         Enemy_SpireSpear       1.00      1.00      1.00        10
+       Enemy_TheCollector       1.00      1.00      1.00         7
+        Enemy_TheGuardian       1.00      1.00      1.00        11
+          Enemy_TimeEater       1.00      1.00      1.00         3
+          Enemy_Transient       1.00      1.00      1.00         9
+       Enemy_WrithingMass       1.00      1.00      1.00         6
+          HealthBar_Enemy       1.00      1.00      1.00       588
+         HealthBar_Player       1.00      1.00      1.00       281
+            Intent_ATTACK       0.99      1.00      0.99       292
+       Intent_ATTACK_BUFF       1.00      0.67      0.80         3
+     Intent_ATTACK_DEBUFF       1.00      1.00      1.00        96
+     Intent_ATTACK_DEFEND       1.00      0.85      0.92        13
+              Intent_BUFF       1.00      1.00      1.00        43
+            Intent_DEBUFF       1.00      1.00      1.00        59
+            Intent_DEFEND       1.00      1.00      1.00        23
+       Intent_DEFEND_BUFF       1.00      1.00      1.00        25
+     Intent_DEFEND_DEBUFF       1.00      1.00      1.00         3
+             Intent_SLEEP       1.00      1.00      1.00        12
+     Intent_STRONG_DEBUFF       1.00      1.00      1.00        38
+           Intent_UNKNOWN       1.00      1.00      1.00        19
+          Player_IRONCLAD       1.00      1.00      1.00       327
+    Potion_Ancient Potion       1.00      1.00      1.00        22
+      Potion_AttackPotion       1.00      1.00      1.00        21
+Potion_BlessingOfTheForge       1.00      1.00      1.00        31
+      Potion_Block Potion       1.00      1.00      1.00        36
+       Potion_BloodPotion       1.00      1.00      1.00        19
+   Potion_ColorlessPotion       1.00      1.00      1.00        29
+     Potion_CultistPotion       1.00      1.00      1.00        35
+  Potion_Dexterity Potion       1.00      1.00      1.00        27
+    Potion_DistilledChaos       1.00      1.00      1.00        27
+ Potion_DuplicationPotion       1.00      1.00      1.00        28
+      Potion_ElixirPotion       1.00      1.00      1.00        33
+     Potion_Energy Potion       1.00      1.00      1.00        28
+      Potion_EntropicBrew       1.00      1.00      1.00        15
+    Potion_EssenceOfSteel       1.00      1.00      1.00        16
+  Potion_Explosive Potion       1.00      1.00      1.00        31
+       Potion_FairyPotion       1.00      1.00      1.00        37
+        Potion_FearPotion       1.00      1.00      1.00        19
+       Potion_Fire Potion       1.00      1.00      1.00        29
+       Potion_Fruit Juice       1.00      1.00      1.00        15
+      Potion_GamblersBrew       1.00      1.00      1.00        27
+       Potion_HeartOfIron       1.00      1.00      1.00        36
+      Potion_LiquidBronze       1.00      1.00      1.00        32
+    Potion_LiquidMemories       1.00      1.00      1.00        29
+       Potion_Potion Slot       1.00      1.00      1.00       621
+       Potion_PowerPotion       1.00      1.00      1.00        34
+      Potion_Regen Potion       1.00      1.00      1.00        33
+       Potion_SkillPotion       1.00      1.00      1.00        36
+         Potion_SmokeBomb       1.00      1.00      1.00        28
+         Potion_SneckoOil       1.00      1.00      1.00        23
+       Potion_SpeedPotion       1.00      1.00      1.00        40
+     Potion_SteroidPotion       1.00      1.00      1.00        30
+   Potion_Strength Potion       1.00      1.00      1.00        23
+      Potion_Swift Potion       1.00      1.00      1.00        34
+       Potion_Weak Potion       1.00      1.00      1.00        27
+         Power_BackAttack       1.00      1.00      1.00         1
+           Power_accuracy       1.00      1.00      1.00        21
+         Power_afterImage       1.00      1.00      1.00        10
+                 Power_ai       1.00      1.00      1.00        10
+            Power_amplify       1.00      1.00      1.00        16
+              Power_anger       1.00      1.00      1.00        16
+              Power_armor       1.00      1.00      1.00        15
+           Power_artifact       1.00      1.00      1.00        17
+         Power_attackBurn       1.00      1.00      1.00        15
+         Power_backAttack       1.00      1.00      1.00        16
+        Power_backAttack2       1.00      1.00      1.00        12
+          Power_barricade       1.00      1.00      1.00        17
+               Power_beat       1.00      1.00      1.00        12
+            Power_berserk       1.00      1.00      1.00        18
+               Power_bias       1.00      1.00      1.00        23
+               Power_blur       1.00      1.00      1.00        18
+               Power_book       1.00      1.00      1.00        18
+          Power_brutality       1.00      1.00      1.00        19
+             Power_buffer       1.00      1.00      1.00        23
+              Power_burst       1.00      1.00      1.00        13
+         Power_cExplosion       1.00      1.00      1.00        17
+           Power_carddraw       1.00      1.00      1.00        13
+            Power_channel       1.00      1.00      1.00        23
+              Power_choke       1.00      1.00      1.00        16
+            Power_closeUp       1.00      1.00      1.00        14
+            Power_combust       1.00      1.00      1.00        14
+          Power_confusion       1.00      1.00      1.00        23
+           Power_conserve       1.00      1.00      1.00        20
+        Power_constricted       1.00      1.00      1.00        16
+  Power_controlled_change       1.00      1.00      1.00        21
+         Power_corruption       1.00      1.00      1.00        17
+          Power_curiosity       1.00      1.00      1.00        16
+        Power_darkembrace       1.00      1.00      1.00        16
+        Power_defenseNext       1.00      1.00      1.00        26
+          Power_demonForm       1.00      1.00      1.00        12
+               Power_deva       1.00      1.00      1.00        20
+              Power_deva2       1.00      1.00      1.00        19
+           Power_devotion       1.00      1.00      1.00        15
+          Power_dexterity       1.00      1.00      1.00        10
+       Power_doubleDamage       1.00      1.00      1.00        18
+          Power_doubleTap       1.00      1.00      1.00        15
+               Power_draw       1.00      1.00      1.00        18
+              Power_draw2       1.00      1.00      1.00        19
+               Power_echo       1.00      1.00      1.00        16
+     Power_end_turn_death       1.00      1.00      1.00        14
+     Power_energized_blue       1.00      1.00      1.00        16
+    Power_energized_green       1.00      1.00      1.00        18
+           Power_entangle       1.00      1.00      1.00        14
+            Power_envenom       1.00      1.00      1.00        22
+      Power_establishment       1.00      1.00      1.00        17
+             Power_evolve       1.00      1.00      1.00        15
+          Power_explosive       1.00      1.00      1.00        20
+             Power_fading       0.92      1.00      0.96        12
+            Power_fasting       1.00      1.00      1.00        19
+      Power_firebreathing       1.00      1.00      1.00        21
+       Power_flameBarrier       1.00      1.00      1.00        11
+               Power_flex       1.00      1.00      1.00        16
+             Power_flight       1.00      1.00      1.00        11
+              Power_focus       1.00      1.00      1.00        17
+         Power_forcefield       1.00      1.00      1.00        21
+              Power_frail       1.00      1.00      1.00        24
+              Power_fumes       1.00      1.00      1.00        17
+           Power_heartDef       1.00      1.00      1.00        17
+           Power_heatsink       1.00      1.00      1.00        11
+              Power_hello       1.00      1.00      1.00        19
+                Power_hex       1.00      1.00      1.00        17
+               Power_hymn       1.00      1.00      1.00        11
+     Power_infiniteBlades       1.00      1.00      1.00        15
+      Power_infinitegreen       1.00      1.00      1.00        25
+                Power_int       1.00      1.00      1.00        18
+         Power_intangible       1.00      0.93      0.97        15
+         Power_juggernaut       1.00      1.00      1.00        16
+           Power_lessdraw       1.00      1.00      1.00        10
+         Power_like_water       1.00      1.00      1.00        12
+             Power_lockon       1.00      1.00      1.00        14
+               Power_loop       1.00      1.00      1.00        16
+             Power_magnet       1.00      1.00      1.00        15
+          Power_malleable       1.00      1.00      1.00        20
+             Power_mantra       1.00      1.00      1.00         8
+     Power_master_protect       1.00      1.00      1.00        21
+     Power_master_reality       1.00      1.00      1.00        12
+       Power_master_smite       1.00      1.00      1.00        18
+            Power_mastery       1.00      1.00      1.00        20
+             Power_mayhem       1.00      1.00      1.00        12
+    Power_mental_fortress       1.00      1.00      1.00        18
+             Power_minion       1.00      1.00      1.00        13
+          Power_modeShift       1.00      1.00      1.00        21
+          Power_nightmare       1.00      1.00      1.00        15
+            Power_nirvana       1.00      1.00      1.00        19
+            Power_noBlock       1.00      1.00      1.00        13
+             Power_noDraw       1.00      1.00      1.00        11
+             Power_noPain       1.00      1.00      1.00        17
+           Power_no_skill       1.00      1.00      1.00        18
+          Power_no_stance       1.00      1.00      1.00        19
+           Power_noattack       1.00      1.00      1.00        16
+              Power_omega       1.00      1.00      1.00        21
+       Power_painfulStabs       1.00      1.00      1.00        18
+            Power_panache       1.00      1.00      1.00        13
+    Power_path_to_victory       1.00      1.00      1.00        14
+             Power_penNib       1.00      1.00      1.00        12
+         Power_phantasmal       1.00      1.00      1.00        17
+        Power_platedarmor       1.00      1.00      1.00        13
+             Power_poison       1.00      1.00      1.00        14
+    Power_pressure_points       1.00      1.00      1.00        16
+           Power_reactive       1.00      1.00      1.00        23
+            Power_rebound       1.00      1.00      1.00        15
+              Power_regen       1.00      1.00      1.00        11
+             Power_regrow       1.00      1.00      1.00        14
+             Power_repair       1.00      1.00      1.00        17
+             Power_retain       1.00      1.00      1.00        16
+             Power_ritual       1.00      1.00      1.00        17
+            Power_rupture       1.00      1.00      1.00        15
+           Power_rushdown       1.00      1.00      1.00        20
+           Power_sadistic       1.00      1.00      1.00        14
+            Power_shackle       1.00      1.00      1.00        20
+          Power_sharpHide       1.00      1.00      1.00        17
+              Power_shift       1.00      1.00      1.00        18
+          Power_skillBurn       1.00      1.00      1.00        17
+               Power_slow       1.00      1.00      1.00        16
+              Power_split       1.00      1.00      1.00        19
+         Power_sporeCloud       1.00      1.00      1.00        10
+             Power_stasis       1.00      1.00      1.00        20
+   Power_static_discharge       1.00      1.00      1.00        14
+              Power_storm       1.00      1.00      1.00        15
+           Power_strength       1.00      1.00      1.00        10
+         Power_surrounded       1.00      1.00      1.00        11
+             Power_swivel       1.00      1.00      1.00        18
+       Power_talk_to_hand       1.00      1.00      1.00        19
+           Power_the_bomb       1.00      1.00      1.00        13
+           Power_thievery       1.00      1.00      1.00        17
+             Power_thorns       1.00      1.00      1.00        19
+       Power_thousandCuts       1.00      1.00      1.00        17
+               Power_time       1.00      1.00      1.00        24
+              Power_tools       1.00      1.00      1.00        17
+         Power_unawakened       1.00      1.00      1.00        13
+              Power_vigor       1.00      1.00      1.00        13
+         Power_vulnerable       1.00      1.00      1.00        22
+   Power_wave_of_the_hand       1.00      1.00      1.00        22
+               Power_weak       1.00      1.00      1.00        24
+        Power_wireheading       1.00      1.00      1.00        16
+         Power_wraithForm       1.00      1.00      1.00        16
+            Relic_Akabeko       1.00      1.00      1.00        74
+             Relic_Anchor       1.00      1.00      1.00        76
+    Relic_Ancient Tea Set       1.00      1.00      1.00       103
+         Relic_Art of War       1.00      1.00      1.00        88
+     Relic_Bag of Marbles       1.00      1.00      1.00        96
+ Relic_Bag of Preparation       1.00      1.00      1.00        98
+         Relic_Blood Vial       1.00      1.00      1.00        95
+               Relic_Boot       1.00      1.00      1.00        91
+      Relic_Bronze Scales       1.00      1.00      1.00        78
+  Relic_Centennial Puzzle       1.00      1.00      1.00       101
+        Relic_CeramicFish       1.00      1.00      1.00        77
+             Relic_Damaru       1.00      1.00      1.00        86
+           Relic_DataDisk       1.00      1.00      1.00        90
+      Relic_Dream Catcher       1.00      1.00      1.00        93
+       Relic_Happy Flower       1.00      1.00      1.00        78
+      Relic_Juzu Bracelet       1.00      1.00      1.00       100
+            Relic_Lantern       1.00      1.00      1.00        83
+            Relic_MawBank       1.00      1.00      1.00        85
+         Relic_MealTicket       1.00      1.00      1.00        93
+           Relic_Nunchaku       1.00      1.00      1.00        77
+ Relic_Oddly Smooth Stone       1.00      1.00      1.00        69
+            Relic_Omamori       1.00      1.00      1.00        93
+         Relic_Orichalcum       1.00      1.00      1.00        78
+            Relic_Pen Nib       1.00      1.00      1.00        79
+        Relic_Potion Belt       1.00      1.00      1.00        98
+    Relic_PreservedInsect       1.00      1.00      1.00        75
+          Relic_Red Skull       1.00      1.00      1.00        96
+       Relic_Regal Pillow       1.00      1.00      1.00        79
+       Relic_Smiling Mask       1.00      1.00      1.00        85
+        Relic_Snake Skull       1.00      1.00      1.00        74
+         Relic_Strawberry       1.00      1.00      1.00        80
+         Relic_Tiny Chest       1.00      1.00      1.00        81
+    Relic_Toy Ornithopter       1.00      1.00      1.00        94
+              Relic_Vajra       1.00      1.00      1.00        79
+          Relic_War Paint       1.00      1.00      1.00        85
+          Relic_Whetstone       1.00      1.00      1.00       103
+
+                 accuracy                           1.00     11002
+                macro avg       1.00      1.00      1.00     11002
+             weighted avg       1.00      1.00      1.00     11002
+
