@@ -16,6 +16,7 @@
 !/output/gen_screen_labels/
 !/ouput/gen_screen_classes.txt
 !/output/eval
+!/ouput/stage2_checkpoints/best.pt
 
 # User-specific files
 *.rsuser
