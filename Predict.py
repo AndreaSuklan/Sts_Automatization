@@ -254,8 +254,4 @@ def main():
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> 5ed1ea2ba0aed767bc07f4297240bace859cd7bc
