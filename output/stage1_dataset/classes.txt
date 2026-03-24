@@ -1,0 +1,17 @@
+0  Card
+1  Enemy
+2  PlayerHealthBar
+3  Block
+4  Intent
+5  Player
+6  Potion
+7  Power
+8  Relic
+9  EnergyOrb
+10  EndTurnButton
+11  DrawPile
+12  DiscardPile
+13  GoldDisplay
+14  AscensionDisplay
+15  DeckSize
+16  Orb

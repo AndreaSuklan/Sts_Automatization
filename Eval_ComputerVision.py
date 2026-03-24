@@ -84,6 +84,8 @@ from sklearn.metrics import (
 )
 from tqdm import tqdm
 from ultralytics import YOLO
+import hashlib
+import colorsys
 
 # ─────────────────────────── DEFAULTS ────────────────────────────── #
 
@@ -111,16 +113,21 @@ _MEAN = [0.485, 0.456, 0.406]
 _STD  = [0.229, 0.224, 0.225]
 
 # Generic Stage-1 class colours (BGR-like for PIL RGB)
-GENERIC_COLORS = {
-    "Card":      "#4FC3F7",
-    "Enemy":     "#EF5350",
-    "HealthBar": "#66BB6A",
-    "Intent":    "#FFA726",
-    "Player":    "#AB47BC",
-    "Potion":    "#26C6DA",
-    "Power":     "#FFEE58",
-    "Relic":     "#FF7043",
-}
+
+def get_class_color(class_name: str) -> str:
+    """Generates a consistent, vibrant hex color based on the class name."""
+    # Hash the string to get a consistent integer
+    hash_int = int(hashlib.md5(class_name.encode('utf-8')).hexdigest(), 16)
+    
+    # Hue: 0.0 to 1.0 (covers the whole color wheel)
+    hue = (hash_int % 360) / 360.0
+    # Saturation: 0.5 to 0.8 (keeps it colorful but not blinding)
+    sat = 0.5 + ((hash_int // 360) % 30) / 100.0
+    # Value (Brightness): 0.8 to 1.0 (keeps it light enough for black text)
+    val = 0.8 + ((hash_int // 10800) % 20) / 100.0
+    
+    r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
+    return f"#{int(r*255):02X}{int(g*255):02X}{int(b*255):02X}"
 
 
 # ══════════════════════════════════════════════════════════════════ #
@@ -252,7 +259,7 @@ def _plot_detection_metrics_bar(mp, mr, map50, map5095):
 
 def _plot_per_class_ap(class_names: dict, maps: np.ndarray):
     names  = [class_names[i] for i in range(len(maps))]
-    colors = [GENERIC_COLORS.get(n, "#90A4AE") for n in names]
+    colors = [get_class_color(n) for n in names]
 
     fig, ax = plt.subplots(figsize=(max(6, len(names) * 0.9 + 1), 4))
     bars = ax.bar(names, maps, color=colors, width=0.6, zorder=3)
@@ -321,7 +328,6 @@ def _plot_detection_samples(model, val_img_dir: Path, device: str, n_samples: in
         font = ImageFont.load_default()
 
     class_names = model.names
-    color_list  = list(GENERIC_COLORS.values()) + ["#BDBDBD"] * 20
 
     for idx, img_path in enumerate(chosen):
         result = model(str(img_path), device=device, verbose=False)[0]
@@ -333,7 +339,8 @@ def _plot_detection_samples(model, val_img_dir: Path, device: str, n_samples: in
             conf   = float(box.conf[0])
             x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
             label  = f"{class_names.get(cls_id, str(cls_id))} {conf:.2f}"
-            color  = GENERIC_COLORS.get(class_names.get(cls_id, ""), "#90A4AE")
+            class_name_str = class_names.get(cls_id, str(cls_id))
+            color = get_class_color(class_name_str)
 
             draw.rectangle([x1, y1, x2, y2], outline=color, width=2)
             tw = draw.textlength(label, font=font)

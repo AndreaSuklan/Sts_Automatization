@@ -61,28 +61,35 @@ SAVE_FORMAT   = "PNG"
 JPEG_QUALITY  = 95
 RANDOM_SEED   = 42
 
-GENERIC_CLASSES = [
-    "Card",       # 0
-    "Enemy",      # 1
-    "HealthBar",  # 2
-    "Intent",     # 3
-    "Player",     # 4
-    "Potion",     # 5
-    "Power",      # 6
-    "Relic",      # 7
-]
+# In Yolo_Crop.py
 
-PREFIX_MAP = {
-    "Card_":       "Card",
-    "Enemy_":      "Enemy",
-    "HealthBar_":  "HealthBar",
-    "Intent_":     "Intent",
-    "Player_":     "Player",
-    "Potion_":     "Potion",
-    "Power_":      "Power",
-    "Relic_":      "Relic",
+GENERIC_CLASSES = {
+    "Card": 0, "Enemy": 1, "PlayerHealthBar": 2, "Block": 3,
+    "Intent": 4, "Player": 5, "Potion": 6, "Power": 7, "Relic": 8,
+    "EnergyOrb": 9, "EndTurnButton": 10, "DrawPile": 11, 
+    "DiscardPile": 12, "GoldDisplay": 13, "AscensionDisplay": 14,
+    "DeckSize": 15, "Orb": 16,
 }
 
+PREFIX_MAP = {
+    "Card_":            "Card",
+    "Enemy_":           "Enemy",
+    "HealthBar":        "PlayerHealthBar",
+    "Block":            "Block",
+    "Intent_":          "Intent",
+    "Player_":          "Player",
+    "Potion_":          "Potion",
+    "Power_":           "Power",
+    "Relic_":           "Relic",
+    "EnergyOrb":        "EnergyOrb",
+    "EndTurnButton":    "EndTurnButton",
+    "DrawPile":         "DrawPile",
+    "DiscardPile":      "DiscardPile",
+    "GoldDisplay":      "GoldDisplay",
+    "AscensionDisplay": "AscensionDisplay",
+    "DeckSize":         "DeckSize",
+    "Orb_":             "Orb",
+}
 # ═══════════════════════════════ END FIXED ═══════════════════════════ #
 
 _GENERIC_ID = {name: idx for idx, name in enumerate(GENERIC_CLASSES)}

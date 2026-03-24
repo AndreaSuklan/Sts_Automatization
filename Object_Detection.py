@@ -1,11 +1,8 @@
 """
 Object_Detection.py  -  Stage 1: Generic Object Detector
-═════════════════════════════════════════════════════════
-Trains YOLOv8s to locate and classify 8 generic object types
+═════════════════════════════════════════════════════════════════════
+Trains YOLOv8s to locate and classify 16 generic object types
 in Slay the Spire combat screenshots.
-
-  0 Card  1 Enemy  2 HealthBar  3 Intent
-  4 Player  5 Potion  6 Power  7 Relic
 
 PRE-REQUISITE
   Run Yolo_Crop.py first.  It builds output/stage1_dataset/ with

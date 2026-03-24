@@ -2,7 +2,7 @@ import cv2
 import os
 from pathlib import Path
 
-# --- CONFIGURATION (CUSTOMIZE THESE PATHS) ---
+# --- CONFIGURATION ---
 # Point these to the folders your Slay the Spire mod is saving to!
 CURR_DIR = Path.cwd() / "output"
 IMAGE_DIR = CURR_DIR / "gen_screen_images"

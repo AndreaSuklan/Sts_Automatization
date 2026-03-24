@@ -24,6 +24,8 @@ import argparse
 import sys
 import time
 from pathlib import Path
+import hashlib
+import colorsys
 
 # ─────────────────────── optional-import guard ──────────────────── #
 def _check():
@@ -96,7 +98,7 @@ def load_classifier(weights: Path, classes_txt: Path, device: torch.device):
     else:
         sys.exit(f"classes.txt not found: {classes_txt}")
 
-    ckpt = torch.load(weights, map_location="cpu")
+    ckpt = torch.load(weights, map_location="cpu", weights_only=False)
     ckpt_names = ckpt.get("classes", class_names)
     n = len(ckpt_names)
 
@@ -156,11 +158,21 @@ def predict_image(img_path: Path,
 
 
 # ─────────────────────── annotation ─────────────────────────────── #
-COLORS = {
-    "Card": "#4FC3F7", "Enemy": "#EF5350", "HealthBar": "#66BB6A",
-    "Intent": "#FFA726", "Player": "#AB47BC", "Potion": "#26C6DA",
-    "Power": "#FFEE58", "Relic": "#FF7043",
-}
+
+def get_class_color(class_name: str) -> str:
+    """Generates a consistent, vibrant hex color based on the class name."""
+    # Hash the string to get a consistent integer
+    hash_int = int(hashlib.md5(class_name.encode('utf-8')).hexdigest(), 16)
+    
+    # Hue: 0.0 to 1.0 (covers the whole color wheel)
+    hue = (hash_int % 360) / 360.0
+    # Saturation: 0.5 to 0.8 (keeps it colorful but not blinding)
+    sat = 0.5 + ((hash_int // 360) % 30) / 100.0
+    # Value (Brightness): 0.8 to 1.0 (keeps it light enough for black text)
+    val = 0.8 + ((hash_int // 10800) % 20) / 100.0
+    
+    r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
+    return f"#{int(r*255):02X}{int(g*255):02X}{int(b*255):02X}"
 
 def annotate(img_path: Path, detections: list[dict], out_path: Path) -> None:
     pil  = Image.open(img_path).convert("RGB")
@@ -172,7 +184,7 @@ def annotate(img_path: Path, detections: list[dict], out_path: Path) -> None:
 
     for d in detections:
         x1, y1, x2, y2 = d["box"]
-        color  = COLORS.get(d["generic"], "#BDBDBD")
+        color  = get_class_color(d["generic"])
         label  = f"{d['specific']} ({d['cls_conf']:.2f})"
         draw.rectangle([x1, y1, x2, y2], outline=color, width=2)
         tw = int(draw.textlength(label, font=font))

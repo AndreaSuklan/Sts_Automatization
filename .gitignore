@@ -8,7 +8,7 @@
 #*.pth
 #*.bin
 #*.yaml
-/output/*
+#/output/*
 /logs
 
 # Exception
