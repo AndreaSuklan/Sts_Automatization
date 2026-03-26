@@ -1,26 +1,26 @@
 {
   "crop": {
-    "status": "skipped",
-    "timestamp": "2026-03-20 00:14:35",
-    "elapsed_s": 0.0,
+    "status": "success",
+    "timestamp": "2026-03-25 15:31:49",
+    "elapsed_s": 1.2,
     "returncode": 0
   },
   "detect": {
-    "status": "skipped",
-    "timestamp": "2026-03-20 00:14:35",
-    "elapsed_s": 0.0,
+    "status": "success",
+    "timestamp": "2026-03-25 15:32:09",
+    "elapsed_s": 20.6,
     "returncode": 0
   },
   "classify": {
-    "status": "skipped",
-    "timestamp": "2026-03-20 00:14:35",
-    "elapsed_s": 0.0,
+    "status": "success",
+    "timestamp": "2026-03-25 15:33:27",
+    "elapsed_s": 78.2,
     "returncode": 0
   },
   "eval": {
     "status": "success",
-    "timestamp": "2026-03-20 00:16:02",
-    "elapsed_s": 86.7,
+    "timestamp": "2026-03-25 15:33:43",
+    "elapsed_s": 15.1,
     "returncode": 0
   }
 }

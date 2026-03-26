@@ -391,7 +391,7 @@ def _parse_args() -> argparse.Namespace:
     )
     det.add_argument(
         "--det-device", type=str, default=None, metavar="STR",
-        help="Device(s): 'cpu', '0', or '0,1'  (default in script: 0,1)",
+        help="Device(s): 'auto', 'cpu', '0', or '0,1'  (default in script: auto)",
     )
     det.add_argument(
         "--det-imgsz", type=int, default=None, metavar="INT",
@@ -431,15 +431,15 @@ def _parse_args() -> argparse.Namespace:
     )
     evl.add_argument(
         "--eval-device", type=str, default=None, metavar="STR",
-        help="Device for eval  (default in script: cpu)",
-    )
-    evl.add_argument(
-        "--topn", type=int, default=None, metavar="INT",
-        help="Max classes in classification plots  (default in script: 30)",
+        help="Device for eval: 'auto', 'cpu', '0' (default in script: auto)",
     )
     evl.add_argument(
         "--n-samples", type=int, default=None, dest="n_samples", metavar="INT",
         help="Detection sample mosaic count  (default in script: 16)",
+    )
+    evl.add_argument(
+        "--topn", type=int, default=None, metavar="INT",
+        help="Max classes in classification plots  (default in script: 30)",
     )
 
     return ap.parse_args()

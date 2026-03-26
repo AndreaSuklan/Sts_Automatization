@@ -13,15 +13,16 @@ RESUME
   If runs/detect/<RUN_NAME>/weights/last.pt exists, training
   resumes automatically.  Delete it to start fresh.
 
-CLI ARGUMENTS (all optional - defaults match original CONFIG)
+CLI ARGUMENTS (all optional)
   --epochs  INT         number of training epochs        (100)
   --batch   INT         batch size                       (64)
-  --device  STR         GPU ids or 'cpu'  e.g. 0,1      (0,1)
+  --device  STR         GPU ids, 'cpu', or 'auto'        (auto)
   --imgsz   INT         input image size                 (640)
 """
 
 import argparse
 from pathlib import Path
+import torch
 from ultralytics import YOLO
 
 # ─────────────────────── FIXED CONFIG ───────────────────────── #
@@ -39,19 +40,28 @@ DATA_PERCENTAGE  = 1
 def _parse_device(value: str):
     """
     Parse a device string into the format YOLO expects.
-
+      'auto'  -> dynamically detects all available GPUs, or falls back to 'cpu'
       'cpu'   -> 'cpu'
-      '0'     -> [0]      (single GPU as list so YOLO uses DataParallel path)
+      '0'     -> [0]
       '0,1'   -> [0, 1]
     """
-    if value.strip().lower() == "cpu":
+    val_lower = value.strip().lower()
+    
+    if val_lower == "auto":
+        if torch.cuda.is_available():
+            count = torch.cuda.device_count()
+            return [i for i in range(count)]
         return "cpu"
+        
+    if val_lower == "cpu":
+        return "cpu"
+        
     try:
         ids = [int(x.strip()) for x in value.split(",") if x.strip()]
     except ValueError:
         raise argparse.ArgumentTypeError(
             f"Invalid --device value: {value!r}. "
-            "Use 'cpu', '0' (single GPU), or '0,1' (multi-GPU)."
+            "Use 'auto', 'cpu', '0' (single GPU), or '0,1' (multi-GPU)."
         )
     if not ids:
         raise argparse.ArgumentTypeError("--device cannot be empty.")
@@ -72,8 +82,8 @@ def _parse_args() -> argparse.Namespace:
         help="Batch size (split evenly across GPUs when using multi-GPU)",
     )
     ap.add_argument(
-        "--device", type=str, default="0,1",
-        help="Device(s) to train on: 'cpu', '0' (single GPU), or '0,1' (multi-GPU)",
+        "--device", type=str, default="auto",
+        help="Device(s) to train on: 'auto', 'cpu', '0', or '0,1'",
     )
     ap.add_argument(
         "--imgsz", type=int, default=640,
@@ -83,9 +93,11 @@ def _parse_args() -> argparse.Namespace:
 
 
 def _ensure_dirs() -> None:
-    """Create all directories this script may write to."""
+    """Create all directories this script may write to or read from."""
     Path("logs").mkdir(parents=True, exist_ok=True)
     (Path.cwd() / "runs" / "detect").mkdir(parents=True, exist_ok=True)
+    LAST_WEIGHTS.parent.mkdir(parents=True, exist_ok=True)
+    YAML_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def train() -> None:
@@ -106,15 +118,11 @@ def train() -> None:
     if LAST_WEIGHTS.exists():
         print(f"Resuming Stage 1 training from {LAST_WEIGHTS}")
         model = YOLO(str(LAST_WEIGHTS))
-        model.train(resume=True)
-
+        model.train(resume=True, device=torch.device, data=str(YAML_PATH))
     else:
         if not YAML_PATH.exists():
-            raise FileNotFoundError(
-                f"data.yaml not found at {YAML_PATH}\n"
-                "Run Yolo_Crop.py first to build the Stage 1 dataset."
-            )
-
+            print(f"Warning: data.yaml not found at {YAML_PATH}. Ensure Yolo_Crop.py ran successfully.")
+            
         print("Starting Stage 1 - Generic Object Detector (YOLOv8s)")
         model = YOLO("yolov8s.pt")
         model.train(

@@ -8,8 +8,10 @@
 #*.pth
 #*.bin
 #*.yaml
-#/output/*
+/output/*
 /logs
+*.gz
+/runs/*
 
 # Exception
 !/output/gen_screen_images/

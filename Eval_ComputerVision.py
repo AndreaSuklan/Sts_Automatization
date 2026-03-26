@@ -180,10 +180,14 @@ def evaluate_detector(weights: Path, data_yaml: Path, val_img_dir: Path,
         print("     Skipping Stage 1 evaluation.\n")
         return
 
+    # Auto-detect hardware for YOLO
+    if device.lower() == "auto":
+        device = "0" if torch.cuda.is_available() else "cpu"
+
     model = YOLO(str(weights))
 
     # ── 1. Official YOLO val metrics ──────────────────────────────
-    print("\n  Running YOLO validation …")
+    print(f"\n  Running YOLO validation on device: {device} …")
     results = model.val(
         data=str(data_yaml),
         device=device,
@@ -376,7 +380,14 @@ def evaluate_classifier(weights: Path, classes_txt: Path,
             print("     Skipping Stage 2 evaluation.\n")
             return
 
-    device = torch.device(device_str if device_str != "cpu" else "cpu")
+    # Auto-detect hardware for Torch
+    if device_str.lower() == "auto":
+        actual_device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    else:
+        actual_device = device_str if device_str != "cpu" else "cpu"
+        
+    device = torch.device(actual_device)
+    print(f"\n  Running Stage 2 evaluation on device: {actual_device}")
 
     # ── Load class names ──────────────────────────────────────────
     if classes_txt.exists():
@@ -651,6 +662,8 @@ def parse_args():
         description="Evaluate Stage 1 (YOLO detector) and Stage 2 (EfficientNet classifier)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    ap.add_argument("--device",      type=str,  default="auto",
+                    help="Device: 'auto', 'cpu', '0', '0,1' …  (default: auto)")
     ap.add_argument("--det-weights", type=Path, default=DET_WEIGHTS,
                     help=f"Path to Stage 1 best.pt  (default: {DET_WEIGHTS})")
     ap.add_argument("--cls-weights", type=Path, default=CLS_WEIGHTS,
@@ -661,8 +674,6 @@ def parse_args():
                     help=f"Stage 2 crops dir  (default: {CROPS_DIR})")
     ap.add_argument("--val-img-dir", type=Path, default=STAGE1_VAL_IMG,
                     help=f"Stage 1 val images  (default: {STAGE1_VAL_IMG})")
-    ap.add_argument("--device",      type=str,  default="cpu",
-                    help="Device: 'cpu', '0', '0,1' …  (default: cpu)")
     ap.add_argument("--n-samples",   type=int,  default=16,
                     help="Detection sample mosaic count  (default: 16)")
     ap.add_argument("--topn",        type=int,  default=30,

@@ -332,17 +332,18 @@ def build_stage1_dataset(
 
             (lbl_out / lbl_path.name).write_text("\n".join(remapped), encoding="utf-8")
 
-    # ── data.yaml ─────────────────────────────────────────────────────
+    inverted_classes = {v: k for k, v in GENERIC_CLASSES.items()}
+    
     yaml_content = (
         f"path: {STAGE1_DIR.resolve().as_posix()}\n"
         f"train: images/train\n"
         f"val:   images/val\n"
         f"\n"
         f"nc: {len(GENERIC_CLASSES)}\n"
-        f"names: {GENERIC_CLASSES}\n"
+        f"names: {inverted_classes}\n"
     )
     yaml_path.write_text(yaml_content, encoding="utf-8")
-
+    
     (STAGE1_DIR / "classes.txt").write_text(
         "\n".join(f"{i}  {name}" for i, name in enumerate(GENERIC_CLASSES)),
         encoding="utf-8",

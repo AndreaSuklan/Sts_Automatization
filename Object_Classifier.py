@@ -4,8 +4,7 @@ Object_Classifier.py  -  Stage 2: Specific Identity Classifier
 Trains an EfficientNet-B0 (pretrained on ImageNet) to identify the
 exact name of every crop produced by Yolo_Crop.py.
 
-Each sub-folder in output/cropped_dataset/ is one class, e.g.:
-  Card_Strike_R/    Enemy_JawWorm/    Intent_ATTACK/    Power_strength/
+Each sub-folder in output/cropped_dataset/ is one class.
 
 CHECKPOINTS SAVED
   output/stage2_checkpoints/
@@ -17,10 +16,10 @@ RESUME LOGIC
   If output/stage2_checkpoints/last.pt exists, training resumes
   automatically.  Delete it to force a fresh start.
 
-CLI ARGUMENTS (all optional - defaults match original CONFIG)
+CLI ARGUMENTS (all optional)
   --epochs   INT     number of training epochs           (100)
   --batch    INT     batch size per GPU                  (64)
-  --gpu-ids  STR     comma-separated GPU ids or 'cpu'    (0,1)
+  --gpu-ids  STR     'auto', comma-separated ids, or 'cpu' (auto)
   --lr       FLOAT   initial learning rate               (0.001)
   --imgsz    INT     crop resize dimension (square)      (128)
 """
@@ -56,19 +55,27 @@ _STD  = [0.229, 0.224, 0.225]
 def _parse_gpu_ids(value: str):
     """
     Parse a GPU-ids string into a list of ints, or an empty list for CPU.
-
+      'auto'  -> dynamically detects and returns all GPUs, or [] for CPU
       'cpu'   -> []
       '0'     -> [0]
       '0,1'   -> [0, 1]
     """
-    if value.strip().lower() == "cpu":
+    val_lower = value.strip().lower()
+    
+    if val_lower == "auto":
+        if torch.cuda.is_available():
+            return list(range(torch.cuda.device_count()))
         return []
+
+    if val_lower == "cpu":
+        return []
+        
     try:
         ids = [int(x.strip()) for x in value.split(",") if x.strip()]
     except ValueError:
         raise argparse.ArgumentTypeError(
             f"Invalid --gpu-ids value: {value!r}. "
-            "Use 'cpu', '0' (single GPU), or '0,1' (multi-GPU)."
+            "Use 'auto', 'cpu', '0' (single GPU), or '0,1' (multi-GPU)."
         )
     if not ids:
         raise argparse.ArgumentTypeError("--gpu-ids cannot be empty; use 'cpu' for CPU.")
@@ -89,8 +96,8 @@ def _parse_args() -> argparse.Namespace:
         help="Batch size per GPU",
     )
     ap.add_argument(
-        "--gpu-ids", type=str, default="0,1", dest="gpu_ids",
-        help="GPU ids to use: 'cpu', '0' (single), or '0,1' (multi-GPU)",
+        "--gpu-ids", type=str, default="auto", dest="gpu_ids",
+        help="GPU ids to use: 'auto', 'cpu', '0', or '0,1'",
     )
     ap.add_argument(
         "--lr", type=float, default=1e-3,
@@ -106,10 +113,11 @@ def _parse_args() -> argparse.Namespace:
 def _ensure_dirs() -> None:
     Path("logs").mkdir(parents=True, exist_ok=True)
     CKPT_DIR.mkdir(parents=True, exist_ok=True)
+    CROPS_DIR.mkdir(parents=True, exist_ok=True)
 
-    if not CROPS_DIR.exists() or not any(CROPS_DIR.iterdir()):
+    if not any(CROPS_DIR.iterdir()):
         sys.exit(
-            f"Crops directory not found or empty: {CROPS_DIR}\n"
+            f"Crops directory is empty: {CROPS_DIR}\n"
             "Run Yolo_Crop.py first to generate the cropped dataset."
         )
 
@@ -147,7 +155,7 @@ def build_dataloaders(imgsz: int, batch: int):
     train_ds = Subset(datasets.ImageFolder(str(CROPS_DIR), transform=train_tf), train_idx)
     val_ds   = Subset(datasets.ImageFolder(str(CROPS_DIR), transform=val_tf),   val_idx)
 
-    use_pin = len(class_names) > 0  # True when a GPU is available
+    use_pin = len(class_names) > 0 
     train_loader = DataLoader(
         train_ds, batch_size=batch, shuffle=True,
         num_workers=WORKERS, pin_memory=use_pin,
@@ -170,9 +178,8 @@ def build_model(n_classes: int) -> nn.Module:
 
 def train() -> None:
     args    = _parse_args()
-    gpu_ids = _parse_gpu_ids(args.gpu_ids)
-
     _ensure_dirs()
+    gpu_ids = _parse_gpu_ids(args.gpu_ids)
 
     # ── Device setup ──────────────────────────────────────────────────
     if gpu_ids and torch.cuda.is_available():
@@ -268,7 +275,6 @@ def train() -> None:
             f"  ({elapsed:.1f}s)"
         )
 
-        # Always save the plain module (unwrap DataParallel) for portability.
         raw_state = (model.module if use_multi else model).state_dict()
 
         torch.save({
