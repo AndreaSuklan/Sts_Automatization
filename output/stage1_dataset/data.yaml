@@ -1,6 +1,0 @@
-path: C:/Users/andre/Documents/GitHub/Sts_Automatization/output/stage1_dataset
-train: images/train
-val:   images/val
-
-nc: 17
-names: {'Card': 0, 'Enemy': 1, 'PlayerHealthBar': 2, 'Block': 3, 'Intent': 4, 'Player': 5, 'Potion': 6, 'Power': 7, 'Relic': 8, 'EnergyOrb': 9, 'EndTurnButton': 10, 'DrawPile': 11, 'DiscardPile': 12, 'GoldDisplay': 13, 'AscensionDisplay': 14, 'DeckSize': 15, 'Orb': 16}

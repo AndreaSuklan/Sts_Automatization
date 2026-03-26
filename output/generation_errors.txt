@@ -1,1 +1,0 @@
-[LOG] Could not read config.txt ÔÇö defaulting to 10 images. | Details: java.io.FileNotFoundException: C:\Users\andre\Documents\GitHub\Sts_Automatization\output\config.txt (Impossibile trovare il file specificato)
