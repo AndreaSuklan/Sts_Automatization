@@ -118,7 +118,7 @@ def train() -> None:
     if LAST_WEIGHTS.exists():
         print(f"Resuming Stage 1 training from {LAST_WEIGHTS}")
         model = YOLO(str(LAST_WEIGHTS))
-        model.train(resume=True, device=torch.device, data=str(YAML_PATH))
+        model.train(resume=True, device=device, data=str(YAML_PATH))    
     else:
         if not YAML_PATH.exists():
             print(f"Warning: data.yaml not found at {YAML_PATH}. Ensure Yolo_Crop.py ran successfully.")

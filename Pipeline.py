@@ -73,7 +73,9 @@ OUTPUT_DIR = ROOT_DIR / "output"
 CROP_YAML     = OUTPUT_DIR / "stage1_dataset" / "data.yaml"
 CROP_DIR      = OUTPUT_DIR / "cropped_dataset"
 DETECT_BEST   = ROOT_DIR  / "runs" / "detect" / "sts_detector" / "weights" / "best.pt"
+DETECT_LAST   = ROOT_DIR  / "runs" / "detect" / "sts_detector" / "weights" / "last.pt"
 CLASSIFY_BEST = OUTPUT_DIR / "stage2_checkpoints" / "best.pt"
+CLASSIFY_LAST = OUTPUT_DIR / "stage2_checkpoints" / "last.pt"
 
 # ── Logging / state ───────────────────────────────────────────────────────────
 STATE_FILE   = ROOT_DIR / "pipeline_state.json"
@@ -153,8 +155,13 @@ def _record(
     }
     _save_state(state)
 
-
-# ──────────────────────────────── SKIP LOGIC ─────────────────────────────────
+def _crop_complete() -> bool:
+    """True when Yolo_Crop.py outputs are fully present."""
+    if not CROP_YAML.exists():
+        return False
+    if not CROP_DIR.is_dir():
+        return False
+    return any(d.is_dir() for d in CROP_DIR.iterdir())
 
 def _crop_complete() -> bool:
     """True when Yolo_Crop.py outputs are fully present."""
@@ -164,15 +171,6 @@ def _crop_complete() -> bool:
         return False
     return any(d.is_dir() for d in CROP_DIR.iterdir())
 
-
-def _detect_complete() -> bool:
-    return DETECT_BEST.exists()
-
-
-def _classify_complete() -> bool:
-    return CLASSIFY_BEST.exists()
-
-
 def _should_run(
     stage: str,
     force: bool,
@@ -180,37 +178,31 @@ def _should_run(
 ) -> Tuple[bool, str]:
     """
     Return (should_run, human_readable_reason).
-
-    Decision priority
-    -----------------
-    1. CLI force flag            → always run
-    2. File-system sentinel      → skip if outputs already exist
-    3. eval stage                → always run
-    4. Previous failure in state → re-run so the user gets a fresh attempt
-    5. Default                   → run (outputs not found)
     """
     if force:
         return True, "forced via CLI flag"
 
+    # If the script previously finished its entire loop (exit code 0), it is truly done.
+    prior = state.get(stage, {})
+    if prior.get("status") == "success":
+        return False, "marked as successfully completed in pipeline_state.json"
+
+    # Cropping doesn't have partial epochs, so file-existence checking is safe here.
     if stage == "crop" and _crop_complete():
         return False, (
             "output/stage1_dataset/data.yaml and "
             "output/cropped_dataset/ already exist"
         )
-    if stage == "detect" and _detect_complete():
-        return False, "runs/detect/sts_detector/weights/best.pt already exists"
-    if stage == "classify" and _classify_complete():
-        return False, "output/stage2_checkpoints/best.pt already exists"
+        
     if stage == "eval":
         return True, "evaluation always re-runs"
 
-    prior = state.get(stage, {})
+    # The sub-scripts will automatically find last.pt and resume!
     if prior.get("status") == "failed":
         ts = prior.get("timestamp", "unknown time")
-        return True, f"re-running after previous failure at {ts}"
+        return True, f"re-running/resuming after previous failure at {ts}"
 
-    return True, "outputs not found — running fresh"
-
+    return True, "training incomplete or not started — running/resuming"
 
 # ─────────────────────────────── SUBPROCESS ──────────────────────────────────
 
@@ -571,6 +563,16 @@ def main() -> None:
 
         # ── RUN ──────────────────────────────────────────────────────────────
         _log(f"  ▶  RUNNING — {why}")
+
+        # If forcing a fresh run, delete old checkpoints
+        if force:
+            if stage_key == "detect":
+                if DETECT_BEST.exists(): DETECT_BEST.unlink()
+                if DETECT_LAST.exists(): DETECT_LAST.unlink()
+            elif stage_key == "classify":
+                if CLASSIFY_BEST.exists(): CLASSIFY_BEST.unlink()
+                if CLASSIFY_LAST.exists(): CLASSIFY_LAST.unlink()
+
         returncode, elapsed = _run_stage(stage_key, extra)
 
         # ── SUCCESS ──────────────────────────────────────────────────────────
