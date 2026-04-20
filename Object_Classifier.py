@@ -205,20 +205,22 @@ def train() -> None:
 
     train_loader, val_loader, class_names = build_dataloaders(args.imgsz, args.batch)
     n_classes  = len(class_names)
+    
     base_model = build_model(n_classes)
+    base_model = base_model.to(device)
 
-    # ── Optimizer / scheduler / criterion ─────────────────────────────
     optimizer = torch.optim.Adam(base_model.parameters(), lr=args.lr)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     criterion = nn.CrossEntropyLoss()
 
-    # ── Resume from last checkpoint (load weights BEFORE DataParallel) ─
+    # ── Resume from last checkpoint ────────────────────────────────────
     start_epoch  = 0
     best_val_acc = 0.0
 
     if LAST_CKPT.exists():
         print(f"Resuming Stage 2 training from {LAST_CKPT}")
-        ckpt = torch.load(LAST_CKPT, map_location="cpu")
+
+        ckpt = torch.load(LAST_CKPT, map_location=device)
         base_model.load_state_dict(ckpt["model"])
         optimizer.load_state_dict(ckpt["optimizer"])
         scheduler.load_state_dict(ckpt["scheduler"])
@@ -228,8 +230,7 @@ def train() -> None:
     else:
         print("Starting Stage 2 - EfficientNet-B0 Classifier\n")
 
-    # ── Wrap in DataParallel AFTER loading weights ─────────────────────
-    base_model = base_model.to(device)
+    # Wrap in DataParallel
     model: nn.Module = (
         nn.DataParallel(base_model, device_ids=gpu_ids) if use_multi else base_model
     )
